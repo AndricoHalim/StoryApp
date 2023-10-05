@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">StoryApp</string>
     <string name="email_format">[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}</string>
+    <string name="tv_password_input">Masukkan Password Anda</string>
+    <string name="login">LOGIN</string>
+    <string name="tv_email_input">Masukkan Email Anda</string>
+    <string name="tv_input_name">Masukkan Nama Anda</string>
+    <string name="register">DAFTAR</string>
 </resources>

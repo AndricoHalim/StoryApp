@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="email_format">[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}</string>
+</resources>

@@ -6,4 +6,6 @@
     <string name="tv_email_input">Masukkan Email Anda</string>
     <string name="tv_input_name">Masukkan Nama Anda</string>
     <string name="register">DAFTAR</string>
+    <string name="camera">Camera</string>
+    <string name="deskripsi">Deskripsi</string>
 </resources>

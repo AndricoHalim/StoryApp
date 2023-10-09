@@ -22,18 +22,11 @@ class PasswordEditText : AppCompatEditText {
         init()
     }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-//        hint = "Masukkan Password Anda"
+    private fun init(){
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
         inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-    }
-
-
-    private fun init(){
         addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // Do nothing.
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -45,7 +38,6 @@ class PasswordEditText : AppCompatEditText {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // Do nothing.
             }
         })
     }

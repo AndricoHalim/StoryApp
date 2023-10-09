@@ -10,7 +10,7 @@
         android:id="@+id/tv_signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign In"
+        android:text="Register Your Account"
         android:textSize="24sp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
@@ -20,8 +20,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <TextView
+        android:id="@+id/tv_signin_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Complete your data to register"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_signin"/>
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ed_register_name"
+        android:id="@+id/ed_register_nameLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/tv_input_name"
@@ -31,14 +45,15 @@
         app:startIconDrawable="@drawable/ic_account_circle_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_signin" >
+        app:layout_constraintTop_toTopOf="@+id/tv_signin_detail" >
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_register_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ed_register_email"
+        android:id="@+id/ed_register_emailLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/tv_email_input"
@@ -48,14 +63,15 @@
         app:startIconDrawable="@drawable/ic_email_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_name" >
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_nameLayout" >
     <com.andricohalim.storyapp.view.EmailEditText
+        android:id="@+id/ed_register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ed_register_password"
+        android:id="@+id/ed_register_passwordLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/tv_password_input"
@@ -65,13 +81,15 @@
         app:startIconDrawable="@drawable/ic_lock_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_email"  >
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_emailLayout"  >
         <com.andricohalim.storyapp.view.PasswordEditText
+            android:id="@+id/ed_register_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/btn_register"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -80,7 +98,43 @@
         android:text="@string/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_password" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_passwordLayout" />
 
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Sudah Punya Akun?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register" />
+
+    <TextView
+        android:id="@+id/tv_login_disini"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text=" Login Disini"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        app:layout_constraintStart_toEndOf="@+id/tv_login"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

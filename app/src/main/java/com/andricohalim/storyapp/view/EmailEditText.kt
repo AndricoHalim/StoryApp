@@ -23,33 +23,28 @@ class EmailEditText : AppCompatEditText {
         init()
     }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-//        hint = "Masukkan Email Anda"
-        textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+    private fun init() {
         inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-    }
+        textAlignment = View.TEXT_ALIGNMENT_VIEW_START
 
-    private fun init(){
-        addTextChangedListener(object: TextWatcher {
+        addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // Do nothing.
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (!isValidEmail(s.toString())) {
                     setError("Format Email Salah", null)
+                } else {
+                    error = null
                 }
             }
 
             private fun isValidEmail(email: String): Boolean {
-                // You can use a regular expression to validate the email format.
                 val emailPattern = context.getString(R.string.email_format)
                 return email.matches(emailPattern.toRegex())
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // Do nothing.
             }
         })
     }

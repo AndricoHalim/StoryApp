@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -15,6 +16,7 @@ import com.andricohalim.storyapp.ui.main.MainActivity
 import com.andricohalim.storyapp.UserModel
 import com.andricohalim.storyapp.databinding.ActivityLoginBinding
 import com.andricohalim.storyapp.response.LoginResponse
+import com.andricohalim.storyapp.response.LoginResult
 import com.andricohalim.storyapp.response.Result
 
 class LoginActivity : AppCompatActivity() {

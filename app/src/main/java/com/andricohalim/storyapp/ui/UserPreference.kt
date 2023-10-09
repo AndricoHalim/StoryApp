@@ -35,9 +35,9 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
 
     fun getUser(): Flow<UserModel> {
         return dataStore.data.map { preferences ->
-            // Ambil nilai user dari DataStore dan kembalikan sebagai UserModel
             val token = preferences[TOKEN_KEY] ?: ""
             val email = preferences[EMAIL_KEY] ?: ""
+            preferences[IS_LOGIN_KEY] ?: false
             UserModel(token, email)
         }
     }

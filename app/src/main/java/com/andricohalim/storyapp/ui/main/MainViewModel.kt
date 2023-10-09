@@ -17,4 +17,9 @@ class MainViewModel(private val userRepository: UserRepository) : ViewModel (){
     fun getStory ()=
         userRepository.getStory()
 
+    fun logout(){
+        viewModelScope.launch {
+            userRepository.logout()
+        }
+    }
 }

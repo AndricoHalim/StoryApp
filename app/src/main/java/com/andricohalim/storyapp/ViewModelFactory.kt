@@ -5,6 +5,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.andricohalim.storyapp.injection.Injection
+import com.andricohalim.storyapp.ui.UserPreference
+import com.andricohalim.storyapp.ui.detail.DetailViewModel
 import com.andricohalim.storyapp.ui.login.LoginViewModel
 import com.andricohalim.storyapp.ui.main.MainViewModel
 import com.andricohalim.storyapp.ui.register.RegisterViewModel
@@ -21,6 +23,8 @@ class ViewModelFactory private constructor(
             return LoginViewModel(userRepository) as T
         } else if(modelClass.isAssignableFrom(MainViewModel::class.java)) {
             return MainViewModel(userRepository) as T
+        }else if(modelClass.isAssignableFrom(DetailViewModel::class.java)) {
+            return DetailViewModel(userRepository) as T
         }
         throw IllegalArgumentException("No ModelClass: " + modelClass.name)
     }

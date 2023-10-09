@@ -1,11 +1,13 @@
 package com.andricohalim.storyapp.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.andricohalim.storyapp.UserModel
+import com.andricohalim.storyapp.response.DetailResponse
 import com.andricohalim.storyapp.response.ErrorResponse
-import com.andricohalim.storyapp.response.ListStoryItem
 import com.andricohalim.storyapp.response.LoginResponse
+import com.andricohalim.storyapp.response.LoginResult
 import com.andricohalim.storyapp.response.RegisterResponse
 import com.andricohalim.storyapp.response.Result
 import com.andricohalim.storyapp.response.StoryResponse
@@ -13,9 +15,14 @@ import com.andricohalim.storyapp.retrofit.ApiService
 import com.andricohalim.storyapp.ui.UserPreference
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
+import java.io.File
 
-class UserRepository private constructor (
+class UserRepository private constructor(
     private val apiService: ApiService,
     private val userPreference: UserPreference
 ) {
@@ -28,6 +35,7 @@ class UserRepository private constructor (
             } catch (e: HttpException) {
                 val error = e.response()?.errorBody()?.string()
                 val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
+                Log.d(TAG, "register: ${e.message.toString()}")
                 emit(Result.Error(errorRes.message.toString()))
             }
         }
@@ -54,23 +62,60 @@ class UserRepository private constructor (
             } catch (e: HttpException) {
                 val error = e.response()?.errorBody()?.string()
                 val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
+                Log.d(TAG, "getStory: ${e.message.toString()}")
                 emit(Result.Error(errorRes.message.toString()))
             }
         }
 
-    suspend fun saveSession(user: UserModel) {
-        userPreference.saveSession(user)
+    fun getDetailStory(id: String): LiveData<Result<DetailResponse>> =
+        liveData {
+            emit(Result.Loading)
+            try {
+                val storyDetail = apiService.getDetailStories(id)
+                emit(Result.Success(storyDetail))
+            } catch (e: HttpException) {
+                val error = e.response()?.errorBody()?.string()
+                val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
+                Log.d(TAG, "getDetailStory: ${e.message.toString()}")
+                emit(Result.Error(errorRes.message.toString()))
+            }
+        }
+
+    fun uploadImage(imageFile: File, description: String) = liveData {
+        emit(Result.Loading)
+        val requestBody = description.toRequestBody("text/plain".toMediaType())
+        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+        val multipartBody = MultipartBody.Part.createFormData(
+            "photo",
+            imageFile.name,
+            requestImageFile
+        )
+        try {
+            val successResponse = apiService.uploadImage(multipartBody, requestBody)
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+            emit(Result.Error(errorResponse.message))
+        }
     }
 
-    fun getSession(): Flow<UserModel> {
-        return userPreference.getSession()
+    suspend fun logout(){
+        userPreference.logout()
     }
+        suspend fun saveSession(user: UserModel) {
+            userPreference.saveSession(user)
+        }
+
+        fun getSession(): Flow<UserModel> {
+            return userPreference.getSession()
+        }
 
     companion object {
         @Volatile
         private var instance: UserRepository? = null
 
-        private const val TAG = "com.andricohalim.storyapp.repository.UserRepository"
+        private const val TAG = "UserRepository"
 
         fun getInstance(apiService: ApiService, userPreference: UserPreference): UserRepository =
             instance ?: synchronized(this) {

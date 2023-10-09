@@ -1,12 +1,20 @@
 package com.andricohalim.storyapp.retrofit
 
+import com.andricohalim.storyapp.response.DetailResponse
+import com.andricohalim.storyapp.response.ErrorResponse
 import com.andricohalim.storyapp.response.LoginResponse
+import com.andricohalim.storyapp.response.LoginResult
 import com.andricohalim.storyapp.response.RegisterResponse
 import com.andricohalim.storyapp.response.StoryResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Path
 
 interface ApiService {
     @FormUrlEncoded
@@ -27,4 +35,16 @@ interface ApiService {
     @GET("stories")
     suspend fun getStories(): StoryResponse
 
+    @GET("stories/{id}")
+    suspend fun getDetailStories(
+        @Path("id")
+        id: String
+    ): DetailResponse
+
+    @Multipart
+    @POST("stories/guest")
+    suspend fun uploadImage(
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody,
+    ): ErrorResponse
 }

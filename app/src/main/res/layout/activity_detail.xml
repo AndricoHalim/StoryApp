@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/iv_detail"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="300dp"
         tools:src="@tools:sample/avatars"
         android:layout_marginTop="16dp"

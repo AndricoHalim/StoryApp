@@ -34,8 +34,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
-
         val layoutManager = LinearLayoutManager(this)
         binding.rvStory.layoutManager = layoutManager
 
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         }
-        mainViewModel.getStory().observe(this) { result ->
+        mainViewModel.listStory.observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
@@ -65,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.fabAdd.setOnClickListener{
+        binding.fabAdd.setOnClickListener {
             val intent = Intent(this@MainActivity, UploadStoryActivity::class.java)
             startActivity(intent)
         }
@@ -89,11 +87,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAction(story: List<ListStoryItem>) {
         binding.apply {
-            if(story.isNotEmpty()){
+            if (story.isNotEmpty()) {
                 val adapter = StoryAdapter(story)
                 binding.rvStory.adapter = adapter
-            }else{
-                rvStory.adapter=null
+            } else {
+                rvStory.adapter = null
             }
         }
     }

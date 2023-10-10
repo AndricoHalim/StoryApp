@@ -7,7 +7,6 @@ import com.andricohalim.storyapp.UserModel
 import com.andricohalim.storyapp.response.DetailResponse
 import com.andricohalim.storyapp.response.ErrorResponse
 import com.andricohalim.storyapp.response.LoginResponse
-import com.andricohalim.storyapp.response.LoginResult
 import com.andricohalim.storyapp.response.RegisterResponse
 import com.andricohalim.storyapp.response.Result
 import com.andricohalim.storyapp.response.StoryResponse
@@ -116,6 +115,7 @@ class UserRepository private constructor(
         private var instance: UserRepository? = null
 
         private const val TAG = "UserRepository"
+
 
         fun getInstance(apiService: ApiService, userPreference: UserPreference): UserRepository =
             instance ?: synchronized(this) {

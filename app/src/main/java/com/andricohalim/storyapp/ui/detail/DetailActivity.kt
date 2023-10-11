@@ -25,19 +25,19 @@ class DetailActivity : AppCompatActivity() {
         id = intent.getStringExtra(KEY_USER).toString()
 
         detailViewModel.detailStory.observe(this){
-                when (it){
-                    is Result.Loading ->{
+            when (it){
+                is Result.Loading ->{
 
-                    }
-
-                    is Result.Success ->{
-                        setData(it.data)
-                    }
-
-                    is Result.Error ->{
-
-                    }
                 }
+
+                is Result.Success ->{
+                    setData(it.data)
+                }
+
+                is Result.Error ->{
+
+                }
+            }
         }
     }
 

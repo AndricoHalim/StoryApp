@@ -1,11 +1,11 @@
 package com.andricohalim.storyapp.view
 
 import android.content.Context
-import android.graphics.Canvas
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.Patterns
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import com.andricohalim.storyapp.R
@@ -31,18 +31,18 @@ class EmailEditText : AppCompatEditText {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
 
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (!isValidEmail(s.toString())) {
-                    setError("Format Email Salah", null)
+            override fun onTextChanged(character: CharSequence, start: Int, before: Int, count: Int) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(character.toString()).matches()){
+                    setError(context.getString(R.string.format_email_salah), null)
                 } else {
                     error = null
                 }
             }
 
-            private fun isValidEmail(email: String): Boolean {
-                val emailPattern = context.getString(R.string.email_format)
-                return email.matches(emailPattern.toRegex())
-            }
+//            private fun isValidEmail(email: String): Boolean {
+//                val emailPattern = context.getString(R.string.email_format)
+//                return email.matches(emailPattern.toRegex())
+//            }
 
             override fun afterTextChanged(s: Editable?) {
             }

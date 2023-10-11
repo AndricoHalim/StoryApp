@@ -8,4 +8,10 @@
     <string name="register">DAFTAR</string>
     <string name="camera">Camera</string>
     <string name="deskripsi">Deskripsi</string>
+    <string name="format_email_salah">Format Email Salah</string>
+    <string name="sukses_login">Sukses Login</string>
+    <string name="login_berhasil">Login Berhasil</string>
+    <string name="lanjut">Lanjut</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
 </resources>

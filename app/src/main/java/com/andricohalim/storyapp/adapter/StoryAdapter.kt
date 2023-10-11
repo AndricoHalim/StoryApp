@@ -45,9 +45,9 @@ class StoryAdapter(private val listStory: List<ListStoryItem>) :
     private fun formatDate(dateString: String): String {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
         val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-            val date = inputFormat.parse(dateString)
-            return outputFormat.format(date!!)
-        }
+        val date = inputFormat.parse(dateString)
+        return outputFormat.format(date!!)
+    }
 
     override fun getItemCount(): Int {
         return listStory.size

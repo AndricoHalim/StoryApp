@@ -28,7 +28,6 @@ data class ListStoryItem(
 	@field:SerializedName("id")
 	val id: String,
 
-
 	@field:SerializedName("description")
 	val description: String,
 

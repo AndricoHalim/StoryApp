@@ -8,14 +8,13 @@ import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.ViewModelFactory
 import com.andricohalim.storyapp.ui.main.MainActivity
 import com.andricohalim.storyapp.UserModel
 import com.andricohalim.storyapp.databinding.ActivityLoginBinding
-import com.andricohalim.storyapp.response.LoginResponse
 import com.andricohalim.storyapp.response.LoginResult
 import com.andricohalim.storyapp.response.Result
 
@@ -54,28 +53,8 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
 
-            when {
-                email.isEmpty() -> {
-                    binding.edEmailLayout.error = "Email Tidak Boleh Kosong"
-                }
-
-                password.isEmpty() -> {
-                    binding.edLoginPasswordLayout.error = "Password Tidak Boleh Kosong"
-                }
-
-                else -> {
-                    loginUser(email, password)
-                }
-            }
+            loginUser(email, password)
         }
-    }
-
-    private fun saveSession(token: LoginResponse) {
-        val email = binding.edLoginEmail.text.toString()
-        loginViewModel.saveSession(UserModel(token.loginResult.token,email))
-        val toast =
-            Toast.makeText(this, "Token Disimpan: ${token.loginResult.token}", Toast.LENGTH_SHORT)
-        toast.show()
     }
 
     private fun loginUser(email: String, password: String) {
@@ -89,29 +68,35 @@ class LoginActivity : AppCompatActivity() {
                     binding.progressBar.visibility = View.GONE
                     setupAction()
                     AlertDialog.Builder(this).apply {
-                        setTitle("Sukses Login")
-                        setMessage("Login Berhasil")
-                        setPositiveButton("Lanjut") { _, _ ->
+                        setTitle(getString(R.string.sukses_login))
+                        setMessage(getString(R.string.login_berhasil))
+                        setPositiveButton(getString(R.string.lanjut)) { _, _ ->
                             val intent = Intent(this@LoginActivity, MainActivity::class.java)
                             startActivity(intent)
                             finish()
                         }
                         show()
                     }
-                    saveSession(result.data)
+                    saveSession(result.data.loginResult)
                 }
 
                 is Result.Error -> {
                     binding.progressBar.visibility = View.GONE
                     AlertDialog.Builder(this).apply {
-                        setTitle("Error")
+                        setTitle(getString(R.string.error))
                         setMessage(result.error)
-                        setPositiveButton("OK") { p0, _ ->
-                            p0.dismiss()
+                        setPositiveButton(getString(R.string.ok)) { it, _ ->
+                            it.dismiss()
                         }
                     }.create().show()
                 }
             }
         }
     }
+
+    private fun saveSession(token: LoginResult) {
+        loginViewModel.saveSession(UserModel(token.token))
+        Log.d("Token disimpan", token.token)
+    }
+
 }

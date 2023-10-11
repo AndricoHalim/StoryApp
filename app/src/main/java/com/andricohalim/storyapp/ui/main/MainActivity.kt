@@ -19,7 +19,6 @@ import com.andricohalim.storyapp.response.StoryResponse
 import com.andricohalim.storyapp.ui.WelcomeActivity
 
 import com.andricohalim.storyapp.ui.register.RegisterActivity
-import com.andricohalim.storyapp.ui.story.UploadStoryActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,7 +43,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         mainViewModel.listStory.observe(this) { result ->
-            if (result != null) {
                 when (result) {
                     is Result.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
@@ -53,19 +51,17 @@ class MainActivity : AppCompatActivity() {
                     is Result.Success -> {
                         binding.progressBar.visibility = View.GONE
                         setupAction(result.data.listStory)
-
                     }
 
                     is Result.Error -> {
 
                     }
                 }
-            }
         }
 
         binding.fabAdd.setOnClickListener {
-            val intent = Intent(this@MainActivity, UploadStoryActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this@MainActivity, UploadStoryActivity::class.java)
+//            startActivity(intent)
         }
     }
 

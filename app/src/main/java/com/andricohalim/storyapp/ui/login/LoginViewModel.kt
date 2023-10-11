@@ -13,7 +13,6 @@ import com.andricohalim.storyapp.response.Result
 
 class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-
     fun loginUser(email: String, password: String)=
         userRepository.login(email, password)
 

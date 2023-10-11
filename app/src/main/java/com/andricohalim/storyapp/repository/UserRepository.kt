@@ -21,7 +21,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
 import java.io.File
 
-class UserRepository private constructor(
+class UserRepository (
     private val apiService: ApiService,
     private val userPreference: UserPreference
 ) {
@@ -35,7 +35,7 @@ class UserRepository private constructor(
                 val error = e.response()?.errorBody()?.string()
                 val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
                 Log.d(TAG, "register: ${e.message.toString()}")
-                emit(Result.Error(errorRes.message.toString()))
+                emit(Result.Error(errorRes.message))
             }
         }
 
@@ -45,10 +45,12 @@ class UserRepository private constructor(
             try {
                 val loginResponse = apiService.login(email, password)
                 emit(Result.Success(loginResponse))
+
             } catch (e: HttpException) {
                 val error = e.response()?.errorBody()?.string()
                 val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
-                emit(Result.Error(errorRes.message.toString()))
+                Log.d(TAG, "login: ${e.message.toString()}")
+                emit(Result.Error(errorRes.message))
             }
         }
 
@@ -62,7 +64,7 @@ class UserRepository private constructor(
                 val error = e.response()?.errorBody()?.string()
                 val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
                 Log.d(TAG, "getStory: ${e.message.toString()}")
-                emit(Result.Error(errorRes.message.toString()))
+                emit(Result.Error(errorRes.message))
             }
         }
 
@@ -76,7 +78,7 @@ class UserRepository private constructor(
                 val error = e.response()?.errorBody()?.string()
                 val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
                 Log.d(TAG, "getDetailStory: ${e.message.toString()}")
-                emit(Result.Error(errorRes.message.toString()))
+                emit(Result.Error(errorRes.message))
             }
         }
 
@@ -111,15 +113,6 @@ class UserRepository private constructor(
         }
 
     companion object {
-        @Volatile
-        private var instance: UserRepository? = null
-
         private const val TAG = "UserRepository"
-
-
-        fun getInstance(apiService: ApiService, userPreference: UserPreference): UserRepository =
-            instance ?: synchronized(this) {
-                instance ?: UserRepository(apiService, userPreference).apply { instance = this }
-            }.also { instance = it }
     }
 }

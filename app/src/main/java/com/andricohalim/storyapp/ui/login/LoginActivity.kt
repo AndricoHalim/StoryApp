@@ -1,5 +1,7 @@
 package com.andricohalim.storyapp.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
         setupView()
         setupAction()
+        playAnimation()
     }
 
     private fun setupView() {
@@ -97,6 +100,41 @@ class LoginActivity : AppCompatActivity() {
     private fun saveSession(token: LoginResult) {
         loginViewModel.saveSession(UserModel(token.token))
         Log.d("Token disimpan", token.token)
+    }
+
+    private fun playAnimation() {
+//        ObjectAnimator.ofFloat(binding.im, View.TRANSLATION_X, -30f, 30f).apply {
+//            duration = 6000
+//            repeatCount = ObjectAnimator.INFINITE
+//            repeatMode = ObjectAnimator.REVERSE
+//        }.start()
+
+        val title = ObjectAnimator.ofFloat(binding.tvRegister, View.ALPHA, 1f).setDuration(100)
+        val description =
+            ObjectAnimator.ofFloat(binding.tvRegisterDetail, View.ALPHA, 1f).setDuration(100)
+        val etName =
+            ObjectAnimator.ofFloat(binding.edEmailLayout, View.ALPHA, 1f).setDuration(100)
+        val tvName = ObjectAnimator.ofFloat(binding.edLoginEmail, View.ALPHA, 1f).setDuration(100)
+        val etEmail =
+            ObjectAnimator.ofFloat(binding.edLoginPasswordLayout, View.ALPHA, 1f).setDuration(100)
+        val tvEmail =
+            ObjectAnimator.ofFloat(binding.edLoginPassword, View.ALPHA, 1f).setDuration(100)
+        val etPassword = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f)
+            .setDuration(100)
+
+        AnimatorSet().apply {
+            playSequentially(
+                title,
+                description,
+                etName,
+                tvName,
+                etEmail,
+                tvEmail,
+                etPassword,
+
+            )
+            startDelay = 100
+        }.start()
     }
 
 }

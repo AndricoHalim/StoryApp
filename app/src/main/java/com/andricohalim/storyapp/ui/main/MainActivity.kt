@@ -7,10 +7,8 @@ import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andricohalim.storyapp.ViewModelFactory
 import com.andricohalim.storyapp.R
@@ -18,10 +16,7 @@ import com.andricohalim.storyapp.adapter.StoryAdapter
 import com.andricohalim.storyapp.databinding.ActivityMainBinding
 import com.andricohalim.storyapp.response.ListStoryItem
 import com.andricohalim.storyapp.response.Result
-import com.andricohalim.storyapp.response.StoryResponse
 import com.andricohalim.storyapp.ui.WelcomeActivity
-
-import com.andricohalim.storyapp.ui.register.RegisterActivity
 import com.andricohalim.storyapp.ui.story.UploadStoryActivity
 
 class MainActivity : AppCompatActivity() {

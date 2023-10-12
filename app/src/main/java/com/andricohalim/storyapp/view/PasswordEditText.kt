@@ -1,7 +1,6 @@
 package com.andricohalim.storyapp.view
 
 import android.content.Context
-import android.graphics.Canvas
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher

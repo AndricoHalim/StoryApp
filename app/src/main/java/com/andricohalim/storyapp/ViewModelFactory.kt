@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.andricohalim.storyapp.injection.Injection
 import com.andricohalim.storyapp.ui.UserPreference
 import com.andricohalim.storyapp.ui.WelcomeViewModel
-import com.andricohalim.storyapp.ui.detail.DetailViewModel
+//import com.andricohalim.storyapp.ui.detail.DetailViewModel
 import com.andricohalim.storyapp.ui.login.LoginViewModel
 import com.andricohalim.storyapp.ui.main.MainViewModel
 import com.andricohalim.storyapp.ui.register.RegisterViewModel
@@ -27,8 +27,6 @@ class ViewModelFactory private constructor(
             return WelcomeViewModel(userRepository) as T
         } else if(modelClass.isAssignableFrom(MainViewModel::class.java)) {
             return MainViewModel(userRepository) as T
-        }else if(modelClass.isAssignableFrom(DetailViewModel::class.java)) {
-            return DetailViewModel(userRepository) as T
         }else if(modelClass.isAssignableFrom(UploadStoryViewModel::class.java)) {
             return UploadStoryViewModel(userRepository) as T
         }

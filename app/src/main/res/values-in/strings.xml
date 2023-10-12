@@ -33,4 +33,6 @@
     <string name="password_tidak_boleh_kurang_dari_8_karakter">Password tidak boleh kurang dari 8 karakter</string>
     <string name="akun_dengan_berhasil_dibuat_login_sekarang">Akun dengan %1$s berhasil dibuat. Login Sekarang.</string>
     <string name="akun_dibuat">Akun Dibuat</string>
+    <string name="created_at">Dibuat pada:</string>
+    <string name="description">Deskripsi:</string>
 </resources>

@@ -2,58 +2,45 @@ package com.andricohalim.storyapp.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import com.andricohalim.storyapp.ViewModelFactory
 import com.andricohalim.storyapp.databinding.ActivityDetailBinding
-import com.andricohalim.storyapp.response.DetailResponse
-import com.andricohalim.storyapp.response.Result
-import com.andricohalim.storyapp.response.Story
-import com.andricohalim.storyapp.ui.detail.DetailViewModel.Companion.id
+import com.andricohalim.storyapp.response.ListStoryItem
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailBinding
-    private val detailViewModel by viewModels<DetailViewModel>{
-        ViewModelFactory.getInstance(application)
-    }
+    private lateinit var detailBinding: ActivityDetailBinding
+    private val binding get() = detailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailBinding.inflate(layoutInflater)
+        detailBinding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        id = intent.getStringExtra(KEY_USER).toString()
-
-        detailViewModel.detailStory.observe(this){
-            when (it){
-                is Result.Loading ->{
-
-                }
-
-                is Result.Success ->{
-                    setData(it.data)
-                }
-
-                is Result.Error ->{
-
-                }
-            }
-        }
+        setData()
     }
 
-    private fun setData(id: Story){
-        binding.apply {
-            Glide.with(this@DetailActivity)
-                .load(id.photoUrl)
-                .into(ivDetail)
-            tvDetailName.text = id.name
-            tvDeskripsi.text = id.description
-        }
+    private fun setData() {
+        @Suppress("DEPRECATION")
+        val story = intent.getParcelableExtra<ListStoryItem>(DETAIL_STORY) as ListStoryItem
+        Glide.with(applicationContext)
+            .load(story.photoUrl)
+            .into(binding.ivDetail)
+        binding.tvDetailName.text = story.name
+        binding.tvGetDeskripsi.text = story.description
+        val formattedDate = formatDate(story.createdAt)
+        binding.tvDateCreated.text = formattedDate
+    }
+
+    private fun formatDate(dateString: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val date = inputFormat.parse(dateString)
+        return outputFormat.format(date!!)
     }
 
     companion object {
-        const val KEY_USER = "key_user"
-        const val KEY_URL = "key_url"
+        const val DETAIL_STORY = "detail_story"
     }
 }

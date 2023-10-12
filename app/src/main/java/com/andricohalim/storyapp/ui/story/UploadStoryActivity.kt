@@ -12,23 +12,17 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import com.andricohalim.storyapp.response.Result
 import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.ViewModelFactory
 import com.andricohalim.storyapp.databinding.ActivityUploadStoryBinding
 import com.andricohalim.storyapp.getImageUri
 import com.andricohalim.storyapp.reduceFileImage
-import com.andricohalim.storyapp.response.ErrorResponse
-import com.andricohalim.storyapp.retrofit.ApiConfig
 import com.andricohalim.storyapp.uriToFile
-import com.google.gson.Gson
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.HttpException
 
 class UploadStoryActivity : AppCompatActivity() {
 
@@ -65,9 +59,6 @@ class UploadStoryActivity : AppCompatActivity() {
         if (!allPermissionsGranted()) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
-
-        binding = ActivityUploadStoryBinding.inflate(layoutInflater)
-
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.btnCamera.setOnClickListener { startCamera() }
         binding.btnUpload.setOnClickListener { uploadImage() }
@@ -116,7 +107,7 @@ class UploadStoryActivity : AppCompatActivity() {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
             Log.d("Image File", "showImage: ${imageFile.path}")
-            val description = "Ini adalah deksripsi gambar"
+            val description = binding.edRegisterName.text.toString()
 
             showLoading(true)
             val requestBody = description.toRequestBody("text/plain".toMediaType())
@@ -126,20 +117,6 @@ class UploadStoryActivity : AppCompatActivity() {
                 imageFile.name,
                 requestImageFile
             )
-            lifecycleScope.launch {
-                try {
-                    val apiService = ApiConfig.getApiService(String())
-                    val successResponse = apiService.uploadImage(multipartBody, requestBody)
-                    showToast(successResponse.message)
-                    showLoading(false)
-                } catch (e: HttpException) {
-                    val errorBody = e.response()?.errorBody()?.string()
-                    val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
-                    showToast(errorResponse.message)
-                    showLoading(false)
-                }
-            }
-
             viewModel.uploadImage(imageFile, description).observe(this) { result ->
                 if (result != null) {
                     when (result) {

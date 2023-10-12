@@ -8,13 +8,10 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.activity.viewModels
-import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.ViewModelFactory
-import com.andricohalim.storyapp.databinding.ActivityLoginBinding
 import com.andricohalim.storyapp.databinding.ActivityWelcomeBinding
 import com.andricohalim.storyapp.ui.login.LoginActivity
 import com.andricohalim.storyapp.ui.main.MainActivity
-import com.andricohalim.storyapp.ui.main.MainViewModel
 import com.andricohalim.storyapp.ui.register.RegisterActivity
 
 class WelcomeActivity : AppCompatActivity() {

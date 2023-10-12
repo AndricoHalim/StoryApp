@@ -4,12 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.andricohalim.storyapp.UserModel
-import com.andricohalim.storyapp.response.DetailResponse
 import com.andricohalim.storyapp.response.ErrorResponse
 import com.andricohalim.storyapp.response.LoginResponse
 import com.andricohalim.storyapp.response.RegisterResponse
 import com.andricohalim.storyapp.response.Result
-import com.andricohalim.storyapp.response.Story
 import com.andricohalim.storyapp.response.StoryResponse
 import com.andricohalim.storyapp.retrofit.ApiService
 import com.andricohalim.storyapp.ui.UserPreference
@@ -65,20 +63,6 @@ class UserRepository (
                 val error = e.response()?.errorBody()?.string()
                 val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
                 Log.d(TAG, "getStory: ${e.message.toString()}")
-                emit(Result.Error(errorRes.message))
-            }
-        }
-
-    fun getDetailStory(id: String): LiveData<Result<Story>> =
-        liveData {
-            emit(Result.Loading)
-            try {
-                val storyDetail = apiService.getDetailStories(id)
-                emit(Result.Success(storyDetail))
-            } catch (e: HttpException) {
-                val error = e.response()?.errorBody()?.string()
-                val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
-                Log.d(TAG, "getDetailStory: ${e.message.toString()}")
                 emit(Result.Error(errorRes.message))
             }
         }

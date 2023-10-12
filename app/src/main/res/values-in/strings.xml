@@ -35,4 +35,20 @@
     <string name="akun_dibuat">Akun Dibuat</string>
     <string name="created_at">Dibuat pada:</string>
     <string name="description">Deskripsi:</string>
+    <string name="are_you_sure_want_to_logout">Apakah kamu ingin keluar?</string>
+    <string name="confirmation">Konfirmasi</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="logo_app">Logo Aplikasi</string>
+    <string name="register_here">Daftar Disini</string>
+    <string name="don_t_have_an_account">Belum punya akun?</string>
+    <string name="story_picture">Gambar Cerita</string>
+    <string name="welcome_image">Gambar Awal</string>
+    <string name="detail_story">Detail Cerita</string>
+    <string name="upload_story">Unggah Cerita</string>
+    <string name="gallery">Galeri</string>
+    <string name="upload">Unggah</string>
+    <string name="no_story">Tidak ada cerita</string>
+    <string name="date_format">yyyy-MM-dd\'T\'HH:mm:ss</string>
+    <string name="output_date">dd MMM yyyy</string>
 </resources>

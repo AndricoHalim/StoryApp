@@ -32,16 +32,18 @@ class EmailEditText : AppCompatEditText {
             }
 
             override fun onTextChanged(character: CharSequence, start: Int, before: Int, count: Int) {
-                if (character.toString().isEmpty()) {
-                    setError(context.getString(R.string.email_harus_diisi), null)
-                }
-                if (!Patterns.EMAIL_ADDRESS.matcher(character.toString()).matches()){
-                    setError(context.getString(R.string.format_email_salah), null)
-                } else {
-                    error = null
+                when {
+                    character.toString().isEmpty() -> {
+                        setError(context.getString(R.string.email_harus_diisi), null)
+                    }
+                    !Patterns.EMAIL_ADDRESS.matcher(character.toString()).matches() -> {
+                        setError(context.getString(R.string.format_email_salah), null)
+                    }
+                    else -> {
+                        error = null
+                    }
                 }
             }
-
 
             override fun afterTextChanged(s: Editable?) {
             }

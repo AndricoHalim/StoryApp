@@ -5,8 +5,8 @@ import android.content.Context
 import android.util.Log
 import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.retrofit.ApiConfig
-import com.andricohalim.storyapp.ui.UserPreference
-import com.andricohalim.storyapp.ui.dataStore
+import com.andricohalim.storyapp.utils.UserPreference
+import com.andricohalim.storyapp.utils.dataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 

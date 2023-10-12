@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.andricohalim.storyapp.UserModel
+import com.andricohalim.storyapp.retrofit.UserModel
 import com.andricohalim.storyapp.repository.UserRepository
 import com.andricohalim.storyapp.response.StoryResponse
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
         return userRepository.getSession().asLiveData()
     }
 
-    private fun getListStory() {
+    fun getListStory() {
         viewModelScope.launch {
             val response = userRepository.getStory()
             response.asFlow().collect {

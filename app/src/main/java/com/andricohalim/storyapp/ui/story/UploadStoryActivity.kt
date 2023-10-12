@@ -14,15 +14,11 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.andricohalim.storyapp.response.Result
 import com.andricohalim.storyapp.R
-import com.andricohalim.storyapp.ViewModelFactory
+import com.andricohalim.storyapp.utils.ViewModelFactory
 import com.andricohalim.storyapp.databinding.ActivityUploadStoryBinding
-import com.andricohalim.storyapp.getImageUri
-import com.andricohalim.storyapp.reduceFileImage
-import com.andricohalim.storyapp.uriToFile
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
+import com.andricohalim.storyapp.utils.getImageUri
+import com.andricohalim.storyapp.utils.reduceFileImage
+import com.andricohalim.storyapp.utils.uriToFile
 
 class UploadStoryActivity : AppCompatActivity() {
 
@@ -56,6 +52,8 @@ class UploadStoryActivity : AppCompatActivity() {
         binding = ActivityUploadStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.title = getString(R.string.upload_story)
+
         if (!allPermissionsGranted()) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
@@ -66,7 +64,6 @@ class UploadStoryActivity : AppCompatActivity() {
 
     private fun startGallery() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-        Toast.makeText(this, "Galeri sukses", Toast.LENGTH_LONG).show()
     }
 
     private val launcherGallery = registerForActivityResult(
@@ -110,13 +107,7 @@ class UploadStoryActivity : AppCompatActivity() {
             val description = binding.edRegisterName.text.toString()
 
             showLoading(true)
-            val requestBody = description.toRequestBody("text/plain".toMediaType())
-            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-            val multipartBody = MultipartBody.Part.createFormData(
-                "photo",
-                imageFile.name,
-                requestImageFile
-            )
+
             viewModel.uploadImage(imageFile, description).observe(this) { result ->
                 if (result != null) {
                     when (result) {
@@ -127,6 +118,7 @@ class UploadStoryActivity : AppCompatActivity() {
                         is Result.Success -> {
                             showToast(result.data.message)
                             showLoading(false)
+                            finish()
                         }
 
                         is Result.Error -> {
@@ -138,7 +130,6 @@ class UploadStoryActivity : AppCompatActivity() {
             }
         } ?: showToast(getString(R.string.empty_image_warning))
     }
-
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE

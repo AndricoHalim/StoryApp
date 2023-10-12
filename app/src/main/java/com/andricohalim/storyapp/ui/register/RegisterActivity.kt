@@ -13,7 +13,7 @@ import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
-import com.andricohalim.storyapp.ViewModelFactory
+import com.andricohalim.storyapp.utils.ViewModelFactory
 import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.databinding.ActivityRegisterBinding
 import com.andricohalim.storyapp.response.Result
@@ -35,8 +35,6 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         progressBar = findViewById(R.id.progressBar)
-
-
 
         setupView()
         setupAction()
@@ -123,15 +121,15 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun playAnimation() {
-//        ObjectAnimator.ofFloat(binding.im, View.TRANSLATION_X, -30f, 30f).apply {
-//            duration = 6000
-//            repeatCount = ObjectAnimator.INFINITE
-//            repeatMode = ObjectAnimator.REVERSE
-//        }.start()
+        ObjectAnimator.ofFloat(binding.ivRegister, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
 
-        val title = ObjectAnimator.ofFloat(binding.tvSignin, View.ALPHA, 1f).setDuration(100)
+        val title = ObjectAnimator.ofFloat(binding.tvRegister, View.ALPHA, 1f).setDuration(100)
         val description =
-            ObjectAnimator.ofFloat(binding.tvSigninDetail, View.ALPHA, 1f).setDuration(100)
+            ObjectAnimator.ofFloat(binding.tvRegisterDetail, View.ALPHA, 1f).setDuration(100)
         val etName =
             ObjectAnimator.ofFloat(binding.edRegisterNameLayout, View.ALPHA, 1f).setDuration(100)
         val tvName = ObjectAnimator.ofFloat(binding.edRegisterName, View.ALPHA, 1f).setDuration(100)

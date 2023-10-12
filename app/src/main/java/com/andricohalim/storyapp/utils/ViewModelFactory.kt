@@ -1,12 +1,11 @@
-package com.andricohalim.storyapp
+package com.andricohalim.storyapp.utils
 
 import com.andricohalim.storyapp.repository.UserRepository
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.andricohalim.storyapp.injection.Injection
-import com.andricohalim.storyapp.ui.UserPreference
-import com.andricohalim.storyapp.ui.WelcomeViewModel
+import com.andricohalim.storyapp.ui.welcome.WelcomeViewModel
 //import com.andricohalim.storyapp.ui.detail.DetailViewModel
 import com.andricohalim.storyapp.ui.login.LoginViewModel
 import com.andricohalim.storyapp.ui.main.MainViewModel

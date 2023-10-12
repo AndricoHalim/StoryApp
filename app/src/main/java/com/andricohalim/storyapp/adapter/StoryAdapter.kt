@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.andricohalim.storyapp.databinding.StoryRowBinding
+import com.andricohalim.storyapp.utils.loadImage
 import com.andricohalim.storyapp.response.ListStoryItem
 import com.andricohalim.storyapp.ui.detail.DetailActivity
-import com.andricohalim.storyapp.withCustomAndFullDateFormat
-import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -20,6 +19,7 @@ private fun formatDate(dateString: String): String {
     val date = inputFormat.parse(dateString)
     return outputFormat.format(date!!)
 }
+
 class StoryAdapter(private val listStory: List<ListStoryItem>) :
 RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
 
@@ -34,13 +34,10 @@ RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
     class ViewHolder(private var binding: StoryRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun binding(stories: ListStoryItem) {
-            Glide.with(binding.root.context)
-                .load(stories.photoUrl)
-                .into(binding.imageView)
+            loadImage(binding.root.context, stories.photoUrl, binding.imageView)
             binding.tvName.text = stories.name
             val formattedDate = formatDate(stories.createdAt)
             binding.tvDateCreated.text = formattedDate
-
 
             binding.root.setOnClickListener {
                 val detailIntent = Intent(binding.root.context, DetailActivity::class.java)

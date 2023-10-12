@@ -1,4 +1,4 @@
-package com.andricohalim.storyapp
+package com.andricohalim.storyapp.utils
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat

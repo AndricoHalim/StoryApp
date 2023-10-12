@@ -10,13 +10,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.WelcomeActivity">
+        tools:context=".ui.welcome.WelcomeActivity">
 
         <ImageView
             android:id="@+id/iv_welcome"
             android:layout_width="0dp"
             android:layout_height="240dp"
             android:layout_marginTop="120dp"
+            android:contentDescription="@string/welcome_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

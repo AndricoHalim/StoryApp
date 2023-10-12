@@ -3,14 +3,14 @@ package com.andricohalim.storyapp.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.andricohalim.storyapp.UserModel
+import com.andricohalim.storyapp.retrofit.UserModel
 import com.andricohalim.storyapp.response.ErrorResponse
 import com.andricohalim.storyapp.response.LoginResponse
 import com.andricohalim.storyapp.response.RegisterResponse
 import com.andricohalim.storyapp.response.Result
 import com.andricohalim.storyapp.response.StoryResponse
 import com.andricohalim.storyapp.retrofit.ApiService
-import com.andricohalim.storyapp.ui.UserPreference
+import com.andricohalim.storyapp.utils.UserPreference
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType

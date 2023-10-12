@@ -6,23 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".ui.register.RegisterActivity">
 
-    <TextView
-        android:id="@+id/tv_signin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/register_your_account"
-        android:textSize="24sp"
-        android:alpha="0"
-        android:layout_marginStart="16dp"
+
+    <ImageView
+        android:id="@+id/iv_register"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/logo_app"
+        app:srcCompat="@drawable/logo" />
 
     <TextView
-        android:id="@+id/tv_signin_detail"
+        android:id="@+id/tv_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:alpha="0"
+        android:textStyle="bold"
+        android:text="@string/register_your_account"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_register" />
+
+    <TextView
+        android:id="@+id/tv_registerDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/complete_your_data_to_register"
@@ -34,7 +47,7 @@
         android:layout_marginBottom="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_signin"/>
+        app:layout_constraintTop_toTopOf="@id/tv_register"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ed_register_nameLayout"
@@ -48,7 +61,7 @@
         app:startIconDrawable="@drawable/ic_account_circle_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_signin_detail" >
+        app:layout_constraintTop_toTopOf="@+id/tv_registerDetail" >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_register_name"
             android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.andricohalim.storyapp
+package com.andricohalim.storyapp.retrofit
 
 data class UserModel (
     val token: String,

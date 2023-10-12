@@ -30,13 +30,16 @@ class PasswordEditText : AppCompatEditText {
             }
 
             override fun onTextChanged(character: CharSequence, start: Int, before: Int, count: Int) {
-                if (character.toString().isEmpty()) {
-                    setError(context.getString(R.string.password_harus_diisi), null)
-                }
-                if (character.toString().length < 8) {
-                    setError(context.getString(R.string.password_tidak_boleh_kurang_dari_8_karakter), null)
-                } else {
-                    error = null
+                when {
+                    character.toString().isEmpty() -> {
+                        setError(context.getString(R.string.password_harus_diisi), null)
+                    }
+                    character.toString().length < 8 -> {
+                        setError(context.getString(R.string.password_tidak_boleh_kurang_dari_8_karakter), null)
+                    }
+                    else -> {
+                        error = null
+                    }
                 }
             }
 

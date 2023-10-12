@@ -1,4 +1,4 @@
-package com.andricohalim.storyapp.ui
+package com.andricohalim.storyapp.ui.welcome
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.activity.viewModels
-import com.andricohalim.storyapp.ViewModelFactory
+import com.andricohalim.storyapp.utils.ViewModelFactory
 import com.andricohalim.storyapp.databinding.ActivityWelcomeBinding
 import com.andricohalim.storyapp.ui.login.LoginActivity
 import com.andricohalim.storyapp.ui.main.MainActivity

@@ -34,4 +34,20 @@
     <string name="akun_dibuat">Account Created</string>
     <string name="created_at">Created at:</string>
     <string name="description">Description:</string>
+    <string name="are_you_sure_want_to_logout">Are you sure want to logout?</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="logo_app">Logo App</string>
+    <string name="register_here">Register Here</string>
+    <string name="don_t_have_an_account">Don\'t have an account</string>
+    <string name="story_picture">Story Picture</string>
+    <string name="welcome_image">Welcome Image</string>
+    <string name="detail_story">Story Detail</string>
+    <string name="upload_story">Upload Story</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="no_story">No Story</string>
+    <string name="date_format">yyyy-MM-dd\'T\'HH:mm:ss</string>
+    <string name="output_date">dd MMM yyyy</string>
 </resources>

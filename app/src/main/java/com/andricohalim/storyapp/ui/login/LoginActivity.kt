@@ -13,12 +13,13 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.andricohalim.storyapp.R
-import com.andricohalim.storyapp.ViewModelFactory
+import com.andricohalim.storyapp.utils.ViewModelFactory
 import com.andricohalim.storyapp.ui.main.MainActivity
-import com.andricohalim.storyapp.UserModel
+import com.andricohalim.storyapp.retrofit.UserModel
 import com.andricohalim.storyapp.databinding.ActivityLoginBinding
 import com.andricohalim.storyapp.response.LoginResult
 import com.andricohalim.storyapp.response.Result
+import com.andricohalim.storyapp.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -52,6 +53,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
+        binding.tvRegisterDisini.setOnClickListener {
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.btnLogin.setOnClickListener {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
@@ -103,35 +109,37 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun playAnimation() {
-//        ObjectAnimator.ofFloat(binding.im, View.TRANSLATION_X, -30f, 30f).apply {
-//            duration = 6000
-//            repeatCount = ObjectAnimator.INFINITE
-//            repeatMode = ObjectAnimator.REVERSE
-//        }.start()
+        ObjectAnimator.ofFloat(binding.ivLogin, View.TRANSLATION_X, -50f, 50f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
 
-        val title = ObjectAnimator.ofFloat(binding.tvRegister, View.ALPHA, 1f).setDuration(100)
-        val description =
-            ObjectAnimator.ofFloat(binding.tvRegisterDetail, View.ALPHA, 1f).setDuration(100)
-        val etName =
-            ObjectAnimator.ofFloat(binding.edEmailLayout, View.ALPHA, 1f).setDuration(100)
-        val tvName = ObjectAnimator.ofFloat(binding.edLoginEmail, View.ALPHA, 1f).setDuration(100)
+        val tvLoginr = ObjectAnimator.ofFloat(binding.tvSignin, View.ALPHA, 1f).setDuration(100)
+        val tvLoginDetail =
+            ObjectAnimator.ofFloat(binding.tvSigninDetail, View.ALPHA, 1f).setDuration(100)
         val etEmail =
+            ObjectAnimator.ofFloat(binding.edEmailLayout, View.ALPHA, 1f).setDuration(100)
+        val edEmail = ObjectAnimator.ofFloat(binding.edLoginEmail, View.ALPHA, 1f).setDuration(100)
+        val etPassword =
             ObjectAnimator.ofFloat(binding.edLoginPasswordLayout, View.ALPHA, 1f).setDuration(100)
-        val tvEmail =
+        val edPassword =
             ObjectAnimator.ofFloat(binding.edLoginPassword, View.ALPHA, 1f).setDuration(100)
-        val etPassword = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f)
-            .setDuration(100)
+        val btnLogin = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(100)
+        val tvRegister = ObjectAnimator.ofFloat(binding.tvRegister, View.ALPHA, 1f).setDuration(100)
+        val tvRegisterDisini = ObjectAnimator.ofFloat(binding.tvRegisterDisini, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
             playSequentially(
-                title,
-                description,
-                etName,
-                tvName,
+                tvLoginr,
+                tvLoginDetail,
                 etEmail,
-                tvEmail,
+                edEmail,
                 etPassword,
-
+                edPassword,
+                btnLogin,
+                tvRegister,
+                tvRegisterDisini
             )
             startDelay = 100
         }.start()

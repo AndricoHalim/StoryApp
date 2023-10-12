@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"-->
-<!--        android:maxSdkVersion="28" />-->
 
     <application
         android:allowBackup="true"
@@ -19,8 +18,8 @@
         android:theme="@style/Theme.StoryApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.WelcomeActivity"
-            android:exported="true" >
+            android:name=".ui.splashscreen.SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,12 +27,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.welcome.WelcomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.detail.DetailActivity"
             android:exported="false"
-            android:parentActivityName=".ui.main.MainActivity"/>
+            android:parentActivityName=".ui.main.MainActivity" />
         <activity
             android:name=".ui.story.UploadStoryActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.main.MainActivity" />
         <activity
             android:name=".ui.register.RegisterActivity"
             android:exported="false" />
@@ -42,7 +45,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -50,19 +54,21 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- Trigger Google Play services to install the backported photo picker module. -->
         <!--suppress AndroidDomInspection -->
-        <service android:name="com.google.android.gms.metadata.ModuleDependencies"
+        <service
+            android:name="com.google.android.gms.metadata.ModuleDependencies"
             android:enabled="false"
             android:exported="false"
             tools:ignore="MissingClass">
             <intent-filter>
                 <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
             </intent-filter>
-            <meta-data android:name="photopicker_activity:0:required" android:value="" />
+            <meta-data
+                android:name="photopicker_activity:0:required"
+                android:value="" />
         </service>
     </application>
 

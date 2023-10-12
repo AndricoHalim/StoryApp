@@ -3,7 +3,7 @@ package com.andricohalim.storyapp.ui.login
 import com.andricohalim.storyapp.repository.UserRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andricohalim.storyapp.UserModel
+import com.andricohalim.storyapp.retrofit.UserModel
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {

@@ -9,11 +9,12 @@ import com.andricohalim.storyapp.repository.UserRepository
 import com.andricohalim.storyapp.response.DetailResponse
 import kotlinx.coroutines.launch
 import com.andricohalim.storyapp.response.Result
+import com.andricohalim.storyapp.response.Story
 
 class DetailViewModel(private val userRepository: UserRepository) : ViewModel(){
 
-    private val _detailStory = MutableLiveData<Result<DetailResponse>>()
-    val detailStory : LiveData<Result<DetailResponse>> = _detailStory
+    private val _detailStory = MutableLiveData<Result<Story>>()
+    val detailStory : LiveData<Result<Story>> = _detailStory
 
     init{
         getDetailStory()

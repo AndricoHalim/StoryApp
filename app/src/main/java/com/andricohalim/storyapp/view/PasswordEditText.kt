@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
+import com.andricohalim.storyapp.R
 
 class PasswordEditText : AppCompatEditText {
     constructor(context: Context) : super(context) {
@@ -31,10 +32,10 @@ class PasswordEditText : AppCompatEditText {
 
             override fun onTextChanged(character: CharSequence, start: Int, before: Int, count: Int) {
                 if (character.toString().isEmpty()) {
-                    setError("Password harus diisi", null)
+                    setError(context.getString(R.string.password_harus_diisi), null)
                 }
                 if (character.toString().length < 8) {
-                    setError("Password tidak boleh kurang dari 8 karakter", null)
+                    setError(context.getString(R.string.password_tidak_boleh_kurang_dari_8_karakter), null)
                 } else {
                     error = null
                 }

@@ -27,4 +27,9 @@
     <string name="datecreated">DateCreated</string>
     <string name="tell_us_about_your_story">Tell us about your story</string>
     <string name="welcome_to_storyapp">Welcome to StoryApp</string>
+    <string name="password_harus_diisi">Password must be filled in</string>
+    <string name="email_harus_diisi">Email must be filled in</string>
+    <string name="password_tidak_boleh_kurang_dari_8_karakter">Password must be no less than 8 characters</string>
+    <string name="akun_dengan_berhasil_dibuat_login_sekarang">Account with %1$s successfully created. Login Now.</string>
+    <string name="akun_dibuat">Account Created</string>
 </resources>

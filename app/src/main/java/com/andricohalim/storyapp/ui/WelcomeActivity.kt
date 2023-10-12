@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.activity.viewModels
 import com.andricohalim.storyapp.R
@@ -43,6 +44,10 @@ class WelcomeActivity : AppCompatActivity() {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
+        }
+
+        binding.btnLocalization.setOnClickListener{
+            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }
 
         playAnimation()

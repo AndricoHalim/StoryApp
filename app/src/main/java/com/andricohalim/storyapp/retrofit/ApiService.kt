@@ -5,6 +5,7 @@ import com.andricohalim.storyapp.response.ErrorResponse
 import com.andricohalim.storyapp.response.LoginResponse
 import com.andricohalim.storyapp.response.LoginResult
 import com.andricohalim.storyapp.response.RegisterResponse
+import com.andricohalim.storyapp.response.Story
 import com.andricohalim.storyapp.response.StoryResponse
 import com.andricohalim.storyapp.response.UploadResponse
 import okhttp3.MultipartBody
@@ -41,7 +42,7 @@ interface ApiService {
     suspend fun getDetailStories(
         @Path("id")
         id: String
-    ): DetailResponse
+    ): Story
 
     @Multipart
     @POST("stories")

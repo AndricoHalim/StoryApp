@@ -7,6 +7,7 @@ import com.andricohalim.storyapp.ViewModelFactory
 import com.andricohalim.storyapp.databinding.ActivityDetailBinding
 import com.andricohalim.storyapp.response.DetailResponse
 import com.andricohalim.storyapp.response.Result
+import com.andricohalim.storyapp.response.Story
 import com.andricohalim.storyapp.ui.detail.DetailViewModel.Companion.id
 import com.bumptech.glide.Glide
 
@@ -41,7 +42,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setData(id: DetailResponse){
+    private fun setData(id: Story){
         binding.apply {
             Glide.with(this@DetailActivity)
                 .load(id.photoUrl)

@@ -69,9 +69,13 @@ class RegisterActivity : AppCompatActivity() {
                     binding.progressBar.visibility = View.GONE
 
                     AlertDialog.Builder(this).apply {
-                        setTitle("Akun Dibuat")
-                        setMessage("Akun dengan $email berhasil dibuat. Login Sekarang.")
-                        setPositiveButton("Lanjut") { _, _ ->
+                        setTitle(getString(R.string.akun_dibuat))
+                        setMessage(
+                            getString(
+                                R.string.akun_dengan_berhasil_dibuat_login_sekarang,
+                                email
+                            ))
+                        setPositiveButton(context.getString(R.string.lanjut)) { _, _ ->
                             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                             startActivity(intent)
                             finish()
@@ -83,9 +87,9 @@ class RegisterActivity : AppCompatActivity() {
                 is Result.Error -> {
                     progressBar.visibility = View.GONE
                     AlertDialog.Builder(this).apply {
-                        setTitle("Error")
+                        setTitle(context.getString(R.string.error))
                         setMessage(result.error)
-                        setPositiveButton("OK") { p0, _ ->
+                        setPositiveButton(context.getString(R.string.ok)) { p0, _ ->
                             p0.dismiss()
                         }
                     }.create().show()

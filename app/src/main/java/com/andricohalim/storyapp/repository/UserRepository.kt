@@ -9,6 +9,7 @@ import com.andricohalim.storyapp.response.ErrorResponse
 import com.andricohalim.storyapp.response.LoginResponse
 import com.andricohalim.storyapp.response.RegisterResponse
 import com.andricohalim.storyapp.response.Result
+import com.andricohalim.storyapp.response.Story
 import com.andricohalim.storyapp.response.StoryResponse
 import com.andricohalim.storyapp.retrofit.ApiService
 import com.andricohalim.storyapp.ui.UserPreference
@@ -68,7 +69,7 @@ class UserRepository (
             }
         }
 
-    fun getDetailStory(id: String): LiveData<Result<DetailResponse>> =
+    fun getDetailStory(id: String): LiveData<Result<Story>> =
         liveData {
             emit(Result.Loading)
             try {

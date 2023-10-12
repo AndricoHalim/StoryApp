@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="tv_password_input">Masukkan Password Anda</string>
+    <string name="login">LOGIN</string>
+    <string name="tv_email_input">Masukkan Email Anda</string>
+    <string name="tv_input_name">Masukkan Nama Anda</string>
+    <string name="register">DAFTAR</string>
+    <string name="camera">Kamera</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="format_email_salah">Format Email Salah</string>
+    <string name="sukses_login">Sukses Login</string>
+    <string name="login_berhasil">Login Berhasil</string>
+    <string name="lanjut">Lanjut</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
+    <string name="empty_image_warning">Silakan masukkan berkas gambar terlebih dahulu.</string>
+    <string name="token_disimpan">Token Disimpan</string>
+    <string name="nama">Nama</string>
+    <string name="sign_in_to_your_account">Masuk ke akun anda</string>
+    <string name="fill_to_sign_in_to_your_account">Isi untuk masuk ke akun Anda</string>
+    <string name="add">Tambah</string>
+    <string name="login_disini">Login Disini</string>
+    <string name="sudah_punya_akun">Sudah Punya Akun?</string>
+    <string name="complete_your_data_to_register">Lengkapi data Anda untuk mendaftar</string>
+    <string name="register_your_account">Daftar Akun Baru</string>
+    <string name="gambar_user">Gambar User</string>
+    <string name="datecreated">Tanggal Dibuat</string>
+    <string name="tell_us_about_your_story">Ceritakan ceritamu disini</string>
+    <string name="welcome_to_storyapp">Selamat datang di StoryApp</string>
+</resources>

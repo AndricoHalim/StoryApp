@@ -32,7 +32,8 @@ class PasswordEditText : AppCompatEditText {
             override fun onTextChanged(character: CharSequence, start: Int, before: Int, count: Int) {
                 if (character.toString().isEmpty()) {
                     setError("Password harus diisi", null)
-                } else if (character.toString().length < 8) {
+                }
+                if (character.toString().length < 8) {
                     setError("Password tidak boleh kurang dari 8 karakter", null)
                 } else {
                     error = null

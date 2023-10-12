@@ -9,7 +9,7 @@
     android:layout_marginTop="4dp"
     android:layout_marginEnd="8dp"
     android:layout_marginBottom="4dp"
-    card_view:cardCornerRadius="4dp">
+    card_view:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +20,8 @@
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:contentDescription="Gambar User"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/gambar_user"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:text="STORY1"
+            android:text="@string/nama"
             card_view:layout_constraintTop_toBottomOf="@+id/imageView"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +44,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:layout_marginTop="8dp"
-            android:text="Deskripsi Story"
+            android:text="@string/datecreated"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_name"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"

@@ -32,6 +32,9 @@ class EmailEditText : AppCompatEditText {
             }
 
             override fun onTextChanged(character: CharSequence, start: Int, before: Int, count: Int) {
+                if (character.toString().isEmpty()) {
+                    setError("Password harus diisi", null)
+                }
                 if (!Patterns.EMAIL_ADDRESS.matcher(character.toString()).matches()){
                     setError(context.getString(R.string.format_email_salah), null)
                 } else {
@@ -39,10 +42,6 @@ class EmailEditText : AppCompatEditText {
                 }
             }
 
-//            private fun isValidEmail(email: String): Boolean {
-//                val emailPattern = context.getString(R.string.email_format)
-//                return email.matches(emailPattern.toRegex())
-//            }
 
             override fun afterTextChanged(s: Editable?) {
             }

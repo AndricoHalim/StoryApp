@@ -1,8 +1,11 @@
 package com.andricohalim.storyapp.ui
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.ViewModelFactory
@@ -11,10 +14,11 @@ import com.andricohalim.storyapp.databinding.ActivityWelcomeBinding
 import com.andricohalim.storyapp.ui.login.LoginActivity
 import com.andricohalim.storyapp.ui.main.MainActivity
 import com.andricohalim.storyapp.ui.main.MainViewModel
+import com.andricohalim.storyapp.ui.register.RegisterActivity
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
-    private val mainViewModel by viewModels<MainViewModel> {
+    private val mainViewModel by viewModels<WelcomeViewModel> {
         ViewModelFactory.getInstance(this)
     }
 
@@ -23,8 +27,15 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.button.setOnClickListener {
+        supportActionBar?.hide()
+
+        binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
         mainViewModel.getSession().observe(this) { user ->
@@ -33,6 +44,28 @@ class WelcomeActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        playAnimation()
     }
 
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.ivWelcome, View.TRANSLATION_X, -50f, 50f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val title = ObjectAnimator.ofFloat(binding.title, View.ALPHA, 1f).setDuration(100)
+        val title2 = ObjectAnimator.ofFloat(binding.title2, View.ALPHA, 1f).setDuration(100)
+        val btnLogin = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(100)
+        val btnRegister = ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(100)
+
+        AnimatorSet().apply {
+            playSequentially(   title,
+                title2,
+                btnLogin,
+                btnRegister)
+            start()
+        }
+    }
 }

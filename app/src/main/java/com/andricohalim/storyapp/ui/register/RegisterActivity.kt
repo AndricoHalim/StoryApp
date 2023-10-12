@@ -1,5 +1,7 @@
 package com.andricohalim.storyapp.ui.register
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +41,7 @@ class RegisterActivity : AppCompatActivity() {
 
         setupView()
         setupAction()
+        playAnimation()
     }
 
     private fun setupView() {
@@ -102,27 +105,9 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.edRegisterEmail.text.toString()
             val password = binding.edRegisterPassword.text.toString()
 
-            when {
-                name.isEmpty() -> {
-                    binding.edRegisterNameLayout.error = "Nama tidak boleh kosonng"
-                }
-
-                email.isEmpty() -> {
-                    binding.edRegisterEmailLayout.error = "Email tidak boleh kosong"
-                }
-
-                password.isEmpty() -> {
-                    binding.edRegisterPasswordLayout.error = "Password tidak boleh kosong"
-                }
-
-                else -> {
-                    binding.edRegisterNameLayout.error = null
-                    binding.edRegisterEmailLayout.error = null
-                    binding.edRegisterPasswordLayout.error = null
-                    registerUser(name, email, password)
-                }
-            }
+            registerUser(name, email, password)
         }
+
         binding.edRegisterName.addTextChangedListener {
             binding.edRegisterNameLayout.error = null
         }
@@ -132,5 +117,49 @@ class RegisterActivity : AppCompatActivity() {
         binding.edRegisterPassword.addTextChangedListener {
             binding.edRegisterPasswordLayout.error = null
         }
+    }
+
+    private fun playAnimation() {
+//        ObjectAnimator.ofFloat(binding.im, View.TRANSLATION_X, -30f, 30f).apply {
+//            duration = 6000
+//            repeatCount = ObjectAnimator.INFINITE
+//            repeatMode = ObjectAnimator.REVERSE
+//        }.start()
+
+        val title = ObjectAnimator.ofFloat(binding.tvSignin, View.ALPHA, 1f).setDuration(100)
+        val description =
+            ObjectAnimator.ofFloat(binding.tvSigninDetail, View.ALPHA, 1f).setDuration(100)
+        val etName =
+            ObjectAnimator.ofFloat(binding.edRegisterNameLayout, View.ALPHA, 1f).setDuration(100)
+        val tvName = ObjectAnimator.ofFloat(binding.edRegisterName, View.ALPHA, 1f).setDuration(100)
+        val etEmail =
+            ObjectAnimator.ofFloat(binding.edRegisterEmailLayout, View.ALPHA, 1f).setDuration(100)
+        val tvEmail =
+            ObjectAnimator.ofFloat(binding.edRegisterEmail, View.ALPHA, 1f).setDuration(100)
+        val etPassword = ObjectAnimator.ofFloat(binding.edRegisterPasswordLayout, View.ALPHA, 1f)
+            .setDuration(100)
+        val tvPassword =
+            ObjectAnimator.ofFloat(binding.edRegisterPassword, View.ALPHA, 1f).setDuration(100)
+        val button = ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(100)
+        val tvLogin = ObjectAnimator.ofFloat(binding.tvLogin, View.ALPHA, 1f).setDuration(100)
+        val tvLoginDisini =
+            ObjectAnimator.ofFloat(binding.tvLoginDisini, View.ALPHA, 1f).setDuration(100)
+
+        AnimatorSet().apply {
+            playSequentially(
+                title,
+                description,
+                etName,
+                tvName,
+                etEmail,
+                tvEmail,
+                etPassword,
+                tvPassword,
+                button,
+                tvLogin,
+                tvLoginDisini
+            )
+            startDelay = 100
+        }.start()
     }
 }

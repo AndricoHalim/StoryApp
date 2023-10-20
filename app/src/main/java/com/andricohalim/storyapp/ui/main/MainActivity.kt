@@ -9,9 +9,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andricohalim.storyapp.ui.maps.MapsActivity
 import com.andricohalim.storyapp.utils.ViewModelFactory
 import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.adapter.StoryAdapter
@@ -53,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                 is Result.Success -> {
                     showLoading(false)
                     setupAction(result.data.listStory)
+                    binding.swiperefresh.isRefreshing = false
                 }
 
                 is Result.Error -> {
@@ -67,12 +70,16 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, UploadStoryActivity::class.java)
             startActivity(intent)
         }
+
+        binding.swiperefresh.setOnRefreshListener {
+            mainViewModel.getListStory()
+            Toast.makeText(this, "Story Refresh", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
     override fun onResume() {
         super.onResume()
-        // Tarik kembali data saat activity aktif kembali
         mainViewModel.getListStory()
     }
 
@@ -83,6 +90,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.menu_maps -> {
+                startActivity(Intent(this, MapsActivity::class.java))
+                true
+            }
+
             R.id.menu_logout -> {
                 logoutConfirmation()
                 true

@@ -9,6 +9,7 @@ import com.andricohalim.storyapp.ui.welcome.WelcomeViewModel
 //import com.andricohalim.storyapp.ui.detail.DetailViewModel
 import com.andricohalim.storyapp.ui.login.LoginViewModel
 import com.andricohalim.storyapp.ui.main.MainViewModel
+import com.andricohalim.storyapp.ui.maps.MapsViewModel
 import com.andricohalim.storyapp.ui.register.RegisterViewModel
 import com.andricohalim.storyapp.ui.story.UploadStoryViewModel
 
@@ -28,13 +29,15 @@ class ViewModelFactory private constructor(
             return MainViewModel(userRepository) as T
         }else if(modelClass.isAssignableFrom(UploadStoryViewModel::class.java)) {
             return UploadStoryViewModel(userRepository) as T
+        }else if(modelClass.isAssignableFrom(MapsViewModel::class.java)) {
+            return MapsViewModel(userRepository) as T
         }
         throw IllegalArgumentException("No ModelClass: " + modelClass.name)
     }
 
     companion object {
-        @Volatile
-        private var instance: ViewModelFactory? = null
+//        @Volatile
+//        private var instance: ViewModelFactory? = null
         fun getInstance(context: Context): ViewModelFactory {
             return ViewModelFactory(Injection.provideRepository(context))
         }

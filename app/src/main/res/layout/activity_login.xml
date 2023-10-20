@@ -10,13 +10,13 @@
         android:id="@+id/iv_login"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        android:layout_marginTop="32dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:contentDescription="@string/logo_app"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/logo_app"
         app:srcCompat="@drawable/logo" />
 
     <TextView
@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:alpha="0"
         android:text="@string/sign_in_to_your_account"
         android:textSize="24sp"
@@ -38,30 +38,30 @@
         android:id="@+id/tv_signin_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/fill_to_sign_in_to_your_account"
-        android:alpha="0"
-        android:textSize="16sp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
+        android:alpha="0"
+        android:text="@string/fill_to_sign_in_to_your_account"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_signin"/>
+        app:layout_constraintTop_toTopOf="@id/tv_signin" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ed_emailLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:alpha="0"
-        android:hint="@string/tv_email_input"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        app:startIconDrawable="@drawable/ic_email_24"
+        android:alpha="0"
+        android:hint="@string/tv_email_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_signin_detail">
+        app:layout_constraintTop_toTopOf="@+id/tv_signin_detail"
+        app:startIconDrawable="@drawable/ic_email_24">
 
         <com.andricohalim.storyapp.view.EmailEditText
             android:id="@+id/ed_login_email"
@@ -73,15 +73,16 @@
         android:id="@+id/ed_login_passwordLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:alpha="0"
-        android:hint="@string/tv_password_input"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        app:startIconDrawable="@drawable/ic_lock_24"
+        android:alpha="0"
+        android:hint="@string/tv_password_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_emailLayout" >
+        app:layout_constraintTop_toBottomOf="@+id/ed_emailLayout"
+        app:startIconDrawable="@drawable/ic_lock_24">
+
         <com.andricohalim.storyapp.view.PasswordEditText
             android:id="@+id/ed_login_password"
             android:layout_width="match_parent"
@@ -92,10 +93,10 @@
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:alpha="0"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:alpha="0"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,9 +106,9 @@
         android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:alpha="0"
         android:text="@string/don_t_have_an_account"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,14 +120,14 @@
         android:id="@+id/tv_registerDisini"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:alpha="0"
         android:text="@string/register_here"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textStyle="bold"
         android:textColor="@color/blue"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_register"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
@@ -136,9 +137,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

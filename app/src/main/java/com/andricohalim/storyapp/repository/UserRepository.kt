@@ -6,6 +6,7 @@ import androidx.lifecycle.liveData
 import com.andricohalim.storyapp.retrofit.UserModel
 import com.andricohalim.storyapp.response.ErrorResponse
 import com.andricohalim.storyapp.response.LoginResponse
+import com.andricohalim.storyapp.response.MapsResponse
 import com.andricohalim.storyapp.response.RegisterResponse
 import com.andricohalim.storyapp.response.Result
 import com.andricohalim.storyapp.response.StoryResponse
@@ -35,6 +36,8 @@ class UserRepository (
                 val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
                 Log.d(TAG, "register: ${e.message.toString()}")
                 emit(Result.Error(errorRes.message))
+            } catch (e: Exception){
+                emit(Result.Error(e.toString()))
             }
         }
 
@@ -50,7 +53,10 @@ class UserRepository (
                 val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
                 Log.d(TAG, "login: ${e.message.toString()}")
                 emit(Result.Error(errorRes.message))
+            }catch (e: Exception){
+                emit(Result.Error(e.toString()))
             }
+
         }
 
     fun getStory(): LiveData<Result<StoryResponse>> =
@@ -64,6 +70,8 @@ class UserRepository (
                 val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
                 Log.d(TAG, "getStory: ${e.message.toString()}")
                 emit(Result.Error(errorRes.message))
+            }catch (e: Exception){
+                emit(Result.Error(e.toString()))
             }
         }
 
@@ -83,8 +91,26 @@ class UserRepository (
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
             emit(Result.Error(errorResponse.message))
+        }catch (e: Exception){
+            emit(Result.Error(e.toString()))
         }
     }
+
+    fun getStoryWithLocation(): LiveData<Result<StoryResponse>> =
+        liveData {
+            emit(Result.Loading)
+            try{
+                val storyLocationResponse = apiService.getStoriesWithLocation()
+                emit(Result.Success(storyLocationResponse))
+            }catch (e: HttpException) {
+                val error = e.response()?.errorBody()?.string()
+                val errorRes = Gson().fromJson(error, MapsResponse::class.java)
+                Log.d(TAG, "getStoryWithLocation ${e.message.toString()}")
+                emit(Result.Error(errorRes.message))
+            }catch (e: Exception){
+                emit(Result.Error(e.toString()))
+            }
+        }
 
     suspend fun logout(){
         userPreference.logout()

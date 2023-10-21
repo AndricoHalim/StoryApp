@@ -14,12 +14,12 @@
         <ImageView
             android:id="@+id/iv_detail"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:contentDescription="@string/story_picture"
-
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -103,7 +103,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_getLocation"
+            android:id="@+id/tv_getLocationLon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/tv_getLocation"
@@ -111,8 +111,19 @@
             android:layout_marginEnd="8dp"
             android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@+id/tv_location"
-            app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_getLocationLat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_getLocation"
+            android:textSize="18sp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_getLocationLon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_location" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

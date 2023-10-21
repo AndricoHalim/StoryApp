@@ -43,6 +43,8 @@ android {
 
 dependencies {
 
+    implementation("com.google.android.gms:play-services-maps:18.0.0")
+    implementation("com.google.android.gms:play-services-location:18.0.0")
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
     implementation("androidx.datastore:datastore-preferences:1.0.0")

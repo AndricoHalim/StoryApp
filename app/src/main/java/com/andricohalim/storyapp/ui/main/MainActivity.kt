@@ -62,10 +62,10 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        setupAction()
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        setupAction()
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
@@ -132,6 +132,8 @@ class MainActivity : AppCompatActivity() {
                 )
                 mainViewModel.listStory.observe(this@MainActivity) {
                     adapter.submitData(lifecycle, it)
+                    showLoading(false)
+                    binding.swiperefresh.isRefreshing = false
                 }
         }
     }

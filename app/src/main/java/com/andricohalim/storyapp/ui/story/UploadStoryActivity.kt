@@ -1,6 +1,7 @@
 package com.andricohalim.storyapp.ui.story
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import com.andricohalim.storyapp.response.Result
 import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.utils.ViewModelFactory
 import com.andricohalim.storyapp.databinding.ActivityUploadStoryBinding
+import com.andricohalim.storyapp.ui.main.MainActivity
 import com.andricohalim.storyapp.utils.getImageUri
 import com.andricohalim.storyapp.utils.reduceFileImage
 import com.andricohalim.storyapp.utils.uriToFile
@@ -118,6 +120,10 @@ class UploadStoryActivity : AppCompatActivity() {
                         is Result.Success -> {
                             showToast(result.data.message)
                             showLoading(false)
+                            val intent = Intent(this@UploadStoryActivity, MainActivity::class.java).apply {
+                                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+                            startActivity(intent)
                             finish()
                         }
 

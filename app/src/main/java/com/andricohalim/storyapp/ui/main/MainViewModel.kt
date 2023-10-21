@@ -17,7 +17,8 @@ import com.andricohalim.storyapp.response.Result
 
 class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    val listStory: LiveData<PagingData<ListStoryItem>> = userRepository.getStory().cachedIn(viewModelScope)
+    val listStory: LiveData<PagingData<ListStoryItem>> =
+        userRepository.getStory().cachedIn(viewModelScope)
 
     fun getSession(): LiveData<UserModel> {
         return userRepository.getSession().asLiveData()

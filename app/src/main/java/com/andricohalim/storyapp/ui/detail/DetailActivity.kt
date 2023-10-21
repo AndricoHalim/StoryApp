@@ -32,7 +32,8 @@ class DetailActivity : AppCompatActivity() {
         binding.tvGetDeskripsi.text = story.description
         val formattedDate = formatDate(story.createdAt)
         binding.tvDateCreated.text = formattedDate
-        binding.tvGetLocation.text = story.lon.toString()
+        binding.tvGetLocationLon.text = story.lon.toString()
+        binding.tvGetLocationLat.text = story.lat.toString()
     }
 
     private fun formatDate(dateString: String): String {

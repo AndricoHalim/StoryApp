@@ -6,33 +6,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.andricohalim.storyapp.retrofit.UserModel
 import com.andricohalim.storyapp.repository.UserRepository
+import com.andricohalim.storyapp.response.ListStoryItem
 import com.andricohalim.storyapp.response.StoryResponse
 import kotlinx.coroutines.launch
 import com.andricohalim.storyapp.response.Result
 
 class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    private val _listStory = MutableLiveData<Result<StoryResponse>>()
-    val listStory: LiveData<Result<StoryResponse>> = _listStory
-
-    init {
-        getListStory()
-    }
+    val listStory: LiveData<PagingData<ListStoryItem>> = userRepository.getStory().cachedIn(viewModelScope)
 
     fun getSession(): LiveData<UserModel> {
         return userRepository.getSession().asLiveData()
     }
 
-    fun getListStory() {
-        viewModelScope.launch {
-            val response = userRepository.getStory()
-            response.asFlow().collect {
-                _listStory.value = it
-            }
-        }
-    }
 
     fun logout() {
         viewModelScope.launch {

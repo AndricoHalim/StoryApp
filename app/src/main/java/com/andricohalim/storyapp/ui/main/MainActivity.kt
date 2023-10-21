@@ -17,6 +17,7 @@ import com.andricohalim.storyapp.ui.maps.MapsActivity
 import com.andricohalim.storyapp.utils.ViewModelFactory
 import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.adapter.StoryAdapter
+import com.andricohalim.storyapp.data.LoadingStateAdapter
 import com.andricohalim.storyapp.databinding.ActivityMainBinding
 import com.andricohalim.storyapp.response.ListStoryItem
 import com.andricohalim.storyapp.response.Result
@@ -40,29 +41,12 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.rvStory.layoutManager = layoutManager
 
+        setupAction()
+
         mainViewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
-            }
-        }
-        mainViewModel.listStory.observe(this) { result ->
-            when (result) {
-                is Result.Loading -> {
-                    showLoading(true)
-                }
-
-                is Result.Success -> {
-                    showLoading(false)
-                    setupAction(result.data.listStory)
-                    binding.swiperefresh.isRefreshing = false
-                }
-
-                is Result.Error -> {
-                    showLoading(false)
-                    binding.tvError.text = result.error
-                    binding.tvError.visibility = View.VISIBLE
-                }
             }
         }
 
@@ -72,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.swiperefresh.setOnRefreshListener {
-            mainViewModel.getListStory()
+            setupAction()
             Toast.makeText(this, "Story Refresh", Toast.LENGTH_SHORT).show()
         }
     }
@@ -80,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mainViewModel.getListStory()
+        setupAction()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -138,15 +122,17 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun setupAction(story: List<ListStoryItem>) {
+    private fun setupAction() {
         binding.apply {
-            if (story.isNotEmpty()) {
-                val adapter = StoryAdapter(story)
-                binding.rvStory.adapter = adapter
-            } else {
-                rvStory.adapter = null
-                binding.tvError.visibility = View.VISIBLE
-            }
+                val adapter = StoryAdapter()
+                binding.rvStory.adapter = adapter.withLoadStateFooter(
+                    footer = LoadingStateAdapter {
+                        adapter.retry()
+                    }
+                )
+                mainViewModel.listStory.observe(this@MainActivity) {
+                    adapter.submitData(lifecycle, it)
+                }
         }
     }
 }

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.andricohalim.storyapp.databinding.StoryRowBinding
 import com.andricohalim.storyapp.utils.loadImage
@@ -20,8 +22,8 @@ private fun formatDate(dateString: String): String {
     return outputFormat.format(date!!)
 }
 
-class StoryAdapter(private val listStory: List<ListStoryItem>) :
-RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
+class StoryAdapter :
+PagingDataAdapter<ListStoryItem, StoryAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -47,11 +49,26 @@ RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
         }
     }
 
-    override fun getItemCount(): Int {
-        return listStory.size
-    }
+//    override fun getItemCount(): Int {
+//        return size
+//    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding(listStory[position])
+       val data = getItem(position)
+        if (data != null) {
+            holder.binding(data)
+        }
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
+            override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
     }
 }

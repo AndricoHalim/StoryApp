@@ -11,19 +11,5 @@ import com.andricohalim.storyapp.response.StoryResponse
 import kotlinx.coroutines.launch
 
 class MapsViewModel (private val userRepository: UserRepository) : ViewModel() {
-    private val _listLocation = MutableLiveData<Result<StoryResponse>>()
-    val listLocation : LiveData<Result<StoryResponse>> = _listLocation
-
-    init {
-        getListStoryLocation()
-    }
-
-    fun getListStoryLocation() {
-        viewModelScope.launch {
-            val response = userRepository.getStoryWithLocation()
-            response.asFlow().collect {
-                _listLocation.value = it
-            }
-        }
-    }
+    fun getListStoryLocation() = userRepository.getStoryWithLocation()
 }

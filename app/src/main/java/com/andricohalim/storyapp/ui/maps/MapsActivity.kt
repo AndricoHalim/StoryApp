@@ -13,7 +13,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.andricohalim.storyapp.databinding.ActivityMapsBinding
+import com.andricohalim.storyapp.response.ListStoryItem
 import com.andricohalim.storyapp.response.Result
+import com.andricohalim.storyapp.response.StoryResponse
 import com.andricohalim.storyapp.ui.main.MainViewModel
 import com.andricohalim.storyapp.utils.ViewModelFactory
 
@@ -25,8 +27,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         ViewModelFactory.getInstance(this)
     }
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,22 +37,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        mapsViewModel.listLocation.observe(this){
-            when (it) {
-                is Result.Loading -> {
-//                    showLoading(true)
-                }
-
-                is Result.Success -> {
-
-                }
-
-                is Result.Error -> {
-                }
-            }
-        }
     }
+
 
     /**
      * Manipulates the map once available.
@@ -66,27 +52,36 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.uiSettings.isIndoorLevelPickerEnabled = true
+        mMap.uiSettings.isCompassEnabled = true
+        mMap.uiSettings.isMapToolbarEnabled = true
+
+        mapsViewModel.getListStoryLocation().observe(this) {
+            when (it) {
+                is Result.Loading -> {
+//                    showLoading(true)
+                }
+
+                is Result.Success -> {
+                    addMarker(it.data.listStory)
+                }
+
+                is Result.Error -> {
+                }
+            }
+        }
     }
 
-    data class storyLocation(
-        val name: String,
-        val latitude: Double,
-        val longitude: Double
-    )
-
-    private fun addMarker(){
-//        data.forEach { data ->
-//            val latLng = LatLng(data.lat, data.lon)
-//            mMap.addMarker(
-//                MarkerOptions()
-//                    .position(latLng)
-//                    .title(data.name)
-//                    .snippet(data.description)
-//            )
-//        }
+    private fun addMarker(location: List<ListStoryItem>) {
+        location.forEach { data ->
+            val latLng = LatLng(data.lat, data.lon)
+            mMap.addMarker(
+                MarkerOptions()
+                    .position(latLng)
+                    .title(data.name)
+                    .snippet(data.description)
+            )
+        }
     }
 }

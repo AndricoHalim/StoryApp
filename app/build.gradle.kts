@@ -43,6 +43,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")

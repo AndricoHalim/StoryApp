@@ -59,7 +59,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             android:text="@string/deskripsi"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_deskripsi" />
@@ -84,10 +84,35 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             android:text="@string/datecreated"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_Createdat" />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_location"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dateCreated"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_getLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_getLocation"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

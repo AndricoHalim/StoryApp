@@ -13,12 +13,16 @@ import android.widget.ImageView
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import com.andricohalim.storyapp.BuildConfig
+import com.andricohalim.storyapp.R
 import com.bumptech.glide.Glide
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
@@ -26,9 +30,17 @@ private const val MAXIMAL_SIZE = 1000000 //1 MB
 private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
 private val timeStamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(Date())
 
+fun formatDate(currentDateString: String, targetTimeZone: String): String {
+    val instant = Instant.parse(currentDateString)
+    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy | HH:mm")
+        .withZone(ZoneId.of(targetTimeZone))
+    return formatter.format(instant)
+}
+
 fun loadImage(context: Context, url: String, imageView: ImageView) {
     Glide.with(context)
         .load(url)
+        .placeholder(R.drawable.loading) // Placeholder image
         .into(imageView)
 }
 

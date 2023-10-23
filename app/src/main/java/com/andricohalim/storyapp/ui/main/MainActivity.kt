@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,8 @@ import com.andricohalim.storyapp.response.ListStoryItem
 import com.andricohalim.storyapp.response.Result
 import com.andricohalim.storyapp.ui.welcome.WelcomeActivity
 import com.andricohalim.storyapp.ui.story.UploadStoryActivity
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,13 +33,15 @@ class MainActivity : AppCompatActivity() {
     private val mainViewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
-
+    private lateinit var adapter: StoryAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         customActionBar()
+
+        adapter = StoryAdapter()
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvStory.layoutManager = layoutManager
@@ -56,11 +61,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.swiperefresh.setOnRefreshListener {
-            setupAction()
-            Toast.makeText(this, "Story Refresh", Toast.LENGTH_SHORT).show()
+            adapter.refresh()
+            Toast.makeText(this@MainActivity, "Story Refresh", Toast.LENGTH_SHORT).show()
         }
     }
-
 
 //    override fun onResume() {
 //        super.onResume()
@@ -70,6 +74,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -124,7 +133,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.apply {
-                val adapter = StoryAdapter()
                 binding.rvStory.adapter = adapter.withLoadStateFooter(
                     footer = LoadingStateAdapter {
                         adapter.retry()

@@ -24,7 +24,6 @@ class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
         return userRepository.getSession().asLiveData()
     }
 
-
     fun logout() {
         viewModelScope.launch {
             userRepository.logout()

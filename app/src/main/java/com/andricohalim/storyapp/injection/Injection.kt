@@ -4,6 +4,7 @@ import com.andricohalim.storyapp.repository.UserRepository
 import android.content.Context
 import android.util.Log
 import com.andricohalim.storyapp.R
+import com.andricohalim.storyapp.database.StoryDatabase
 import com.andricohalim.storyapp.retrofit.ApiConfig
 import com.andricohalim.storyapp.utils.UserPreference
 import com.andricohalim.storyapp.utils.dataStore
@@ -16,7 +17,8 @@ object Injection {
         val user = runBlocking { pref.getUser().first() }
         Log.d(context.getString(R.string.token_disimpan), user.token)
         val apiService = ApiConfig.getApiService(user.token)
-        return UserRepository(apiService, pref)
+        val storyDatabase = StoryDatabase.getDatabase(context)
+        return UserRepository(apiService, pref, storyDatabase)
     }
 
 }

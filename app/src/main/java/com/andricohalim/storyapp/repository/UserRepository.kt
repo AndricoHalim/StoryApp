@@ -9,6 +9,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.andricohalim.data.StoryPagingSource
+import com.andricohalim.storyapp.data.StoryRemoteMediator
+import com.andricohalim.storyapp.database.StoryDao
+import com.andricohalim.storyapp.database.StoryDatabase
 import com.andricohalim.storyapp.retrofit.UserModel
 import com.andricohalim.storyapp.response.ErrorResponse
 import com.andricohalim.storyapp.response.ListStoryItem
@@ -19,6 +22,7 @@ import com.andricohalim.storyapp.response.Result
 import com.andricohalim.storyapp.response.StoryResponse
 import com.andricohalim.storyapp.retrofit.ApiService
 import com.andricohalim.storyapp.utils.UserPreference
+import com.andricohalim.storyapp.utils.wrapEspressoIdlingResource
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
@@ -30,13 +34,10 @@ import java.io.File
 
 class UserRepository (
     private val apiService: ApiService,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
+    private val userDatabase: StoryDatabase
 ) {
-    fun register(
-        name: String,
-        email: String,
-        password: String
-    ): LiveData<Result<RegisterResponse>> =
+    fun register(name: String, email: String, password: String): LiveData<Result<RegisterResponse>> =
         liveData {
             emit(Result.Loading)
             try {
@@ -55,34 +56,42 @@ class UserRepository (
     fun login(email: String, password: String): LiveData<Result<LoginResponse>> =
         liveData {
             emit(Result.Loading)
-            try {
-                val loginResponse = apiService.login(email, password)
-                emit(Result.Success(loginResponse))
+            wrapEspressoIdlingResource {
+                try {
+                    val loginResponse = apiService.login(email, password)
+                    emit(Result.Success(loginResponse))
 
-            } catch (e: HttpException) {
-                val error = e.response()?.errorBody()?.string()
-                val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
-                Log.d(TAG, "login: ${e.message.toString()}")
-                emit(Result.Error(errorRes.message))
-            } catch (e: Exception) {
-                emit(Result.Error(e.toString()))
+                } catch (e: HttpException) {
+                    val error = e.response()?.errorBody()?.string()
+                    val errorRes = Gson().fromJson(error, ErrorResponse::class.java)
+                    Log.d(TAG, "login: ${e.message.toString()}")
+                    emit(Result.Error(errorRes.message))
+                } catch (e: Exception) {
+                    emit(Result.Error(e.toString()))
+                }
             }
-
         }
 
     fun getStory(): LiveData<PagingData<ListStoryItem>> {
         @OptIn(ExperimentalPagingApi::class)
-        return Pager(
-            config = PagingConfig(
-                pageSize = 5
-            ),
-            pagingSourceFactory = {
-                StoryPagingSource(apiService)
-            }
-        ).liveData
+        return try {
+            Pager(
+                config = PagingConfig(
+                    pageSize = 5
+                ),
+                remoteMediator = StoryRemoteMediator(userDatabase, apiService),
+                pagingSourceFactory = {
+//                    StoryPagingSource(apiService)
+                    userDatabase.storyDao().getAllStory()
+                }
+            ).liveData
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
+        }
     }
 
-    fun uploadImage(imageFile: File, description: String) = liveData {
+    fun uploadImage(imageFile: File, description: String, lat: Double?, lon: Double?) = liveData {
         emit(Result.Loading)
         val requestBody = description.toRequestBody("text/plain".toMediaType())
         val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
@@ -92,7 +101,7 @@ class UserRepository (
             requestImageFile
         )
         try {
-            val successResponse = apiService.uploadImage(multipartBody, requestBody)
+            val successResponse = apiService.uploadImage(multipartBody, requestBody, lat, lon)
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()

@@ -9,7 +9,7 @@
             app:showAsAction="ifRoom" />
         <item
             android:id="@+id/menu_localization"
-            android:icon="@drawable/ic_setting_24"
+            android:icon="@drawable/ic_language_24"
             android:title="@string/settings"
             app:showAsAction="ifRoom" />
         <item

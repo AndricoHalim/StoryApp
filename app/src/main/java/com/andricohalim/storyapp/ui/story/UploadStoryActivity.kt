@@ -3,6 +3,7 @@ package com.andricohalim.storyapp.ui.story
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +22,8 @@ import com.andricohalim.storyapp.ui.main.MainActivity
 import com.andricohalim.storyapp.utils.getImageUri
 import com.andricohalim.storyapp.utils.reduceFileImage
 import com.andricohalim.storyapp.utils.uriToFile
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 class UploadStoryActivity : AppCompatActivity() {
 
@@ -32,16 +35,44 @@ class UploadStoryActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(application)
     }
 
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast.makeText(this, "Permission request granted", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this, "Permission request denied", Toast.LENGTH_LONG).show()
-            }
+    private var locationSwitcher: Boolean = false
+    private var currentLocation: Location? = null
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions : Map<String, Boolean> ->
+        val cameraPermissionGranted = permissions[Manifest.permission.CAMERA] ?: false
+        val fineLocationPermissionGranted =
+            permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
+
+        when {
+            cameraPermissionGranted -> Toast.makeText(
+                this,
+                "Camera permission granted ",
+                Toast.LENGTH_LONG
+            ).show()
+
+            fineLocationPermissionGranted -> Toast.makeText(
+                this,
+                "Location permission granted",
+                Toast.LENGTH_LONG
+            ).show()
+
+            !cameraPermissionGranted -> Toast.makeText(
+                this,
+                "Camera permission is required",
+                Toast.LENGTH_LONG
+            ).show()
+
+            !fineLocationPermissionGranted -> Toast.makeText(
+                this,
+                "Fine location permission is required",
+                Toast.LENGTH_LONG
+            ).show()
         }
+    }
 
     private fun allPermissionsGranted() =
         ContextCompat.checkSelfPermission(
@@ -57,11 +88,64 @@ class UploadStoryActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.upload_story)
 
         if (!allPermissionsGranted()) {
-            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
         }
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.btnCamera.setOnClickListener { startCamera() }
         binding.btnUpload.setOnClickListener { uploadImage() }
+
+        val locationSwitch = binding.switchGetLocation
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        locationSwitch.setOnCheckedChangeListener { _, isChecked ->
+            locationSwitcher = isChecked
+            if (isChecked) {
+                requestLocationUpdates()
+            } else{
+                binding.tvLocation.text = null
+            }
+
+        }
+    }
+
+
+    private fun requestLocationUpdates() {
+        if (locationSwitcher) {
+            if (allPermissionsGranted()) {
+                try {
+                    fusedLocationClient.lastLocation
+                        .addOnSuccessListener { location: Location? ->
+                            location?.let {
+                                currentLocation = it
+                                val latitude = it.latitude
+                                val longitude = it.longitude
+                                Log.d("Location", "Latitude: $latitude, Longitude: $longitude")
+                                binding.tvLocation.text = ("$latitude , $longitude")
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("Location", "Error getting location: ${e.message}")
+                        }
+                } catch (e: SecurityException) {
+                    Log.e("Location", "Location permission denied: ${e.message}")
+                }
+            } else {
+                requestPermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+            }
+        }
     }
 
     private fun startGallery() {
@@ -107,10 +191,18 @@ class UploadStoryActivity : AppCompatActivity() {
             val imageFile = uriToFile(uri, this).reduceFileImage()
             Log.d("Image File", "showImage: ${imageFile.path}")
             val description = binding.edRegisterName.text.toString()
+            var lon: Double? = null
+            var lat: Double? = null
+
+
+            if (locationSwitcher) {
+                lon = currentLocation?.longitude
+                lat = currentLocation?.latitude
+            }
 
             showLoading(true)
 
-            viewModel.uploadImage(imageFile, description).observe(this) { result ->
+            viewModel.uploadImage(imageFile, description, lat, lon).observe(this) { result ->
                 if (result != null) {
                     when (result) {
                         is Result.Loading -> {
@@ -120,11 +212,13 @@ class UploadStoryActivity : AppCompatActivity() {
                         is Result.Success -> {
                             showToast(result.data.message)
                             showLoading(false)
-                            val intent = Intent(this@UploadStoryActivity, MainActivity::class.java).apply {
-                                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            }
+                            val intent =
+                                Intent(this@UploadStoryActivity, MainActivity::class.java).apply {
+                                    flags =
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                }
                             startActivity(intent)
-                            finish()
+//                            finish()
                         }
 
                         is Result.Error -> {

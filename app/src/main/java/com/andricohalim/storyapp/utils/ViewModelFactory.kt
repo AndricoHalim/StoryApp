@@ -36,8 +36,6 @@ class ViewModelFactory private constructor(
     }
 
     companion object {
-//        @Volatile
-//        private var instance: ViewModelFactory? = null
         fun getInstance(context: Context): ViewModelFactory {
             return ViewModelFactory(Injection.provideRepository(context))
         }

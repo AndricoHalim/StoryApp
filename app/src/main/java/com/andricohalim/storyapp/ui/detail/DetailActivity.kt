@@ -8,6 +8,7 @@ import com.andricohalim.storyapp.utils.loadImage
 import com.andricohalim.storyapp.response.ListStoryItem
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.TimeZone
 
 class DetailActivity : AppCompatActivity() {
 
@@ -17,7 +18,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         detailBinding = ActivityDetailBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        setContentView(binding.root)
 
         supportActionBar?.title = getString(R.string.detail_story)
 
@@ -30,17 +31,10 @@ class DetailActivity : AppCompatActivity() {
         loadImage(applicationContext, story.photoUrl, binding.ivDetail)
         binding.tvDetailName.text = story.name
         binding.tvGetDeskripsi.text = story.description
-        val formattedDate = formatDate(story.createdAt)
-        binding.tvDateCreated.text = formattedDate
+        binding.tvDateCreated.text =
+            com.andricohalim.storyapp.utils.formatDate(story.createdAt, TimeZone.getDefault().id)
         binding.tvGetLocationLon.text = story.lon.toString()
         binding.tvGetLocationLat.text = story.lat.toString()
-    }
-
-    private fun formatDate(dateString: String): String {
-        val inputFormat = SimpleDateFormat(getString(R.string.date_format), Locale.getDefault())
-        val outputFormat = SimpleDateFormat(getString(R.string.output_date), Locale.getDefault())
-        val date = inputFormat.parse(dateString)
-        return outputFormat.format(date!!)
     }
 
     companion object {

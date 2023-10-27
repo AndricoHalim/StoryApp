@@ -2,7 +2,6 @@ package com.andricohalim.storyapp.ui.main
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
@@ -10,22 +9,18 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.andricohalim.storyapp.ui.maps.MapsActivity
-import com.andricohalim.storyapp.utils.ViewModelFactory
 import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.adapter.StoryAdapter
 import com.andricohalim.storyapp.data.LoadingStateAdapter
 import com.andricohalim.storyapp.databinding.ActivityMainBinding
-import com.andricohalim.storyapp.response.ListStoryItem
-import com.andricohalim.storyapp.response.Result
-import com.andricohalim.storyapp.ui.welcome.WelcomeActivity
+import com.andricohalim.storyapp.ui.maps.MapsActivity
 import com.andricohalim.storyapp.ui.story.UploadStoryActivity
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.andricohalim.storyapp.ui.welcome.WelcomeActivity
+import com.andricohalim.storyapp.utils.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,23 +57,19 @@ class MainActivity : AppCompatActivity() {
 
         binding.swiperefresh.setOnRefreshListener {
             adapter.refresh()
+            scrollToItem(0)
             Toast.makeText(this@MainActivity, "Story Refresh", Toast.LENGTH_SHORT).show()
         }
+
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        setupAction()
-//    }
-
+    private fun scrollToItem(index: Int) {
+        val layoutManager = binding.rvStory.layoutManager as LinearLayoutManager
+        layoutManager.scrollToPositionWithOffset(index, 0)
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -103,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("InflateParams")
-    private fun customActionBar(){
+    private fun customActionBar() {
         supportActionBar?.setDisplayShowHomeEnabled(false)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.title = ""
@@ -115,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         logoImageView.setImageResource(R.drawable.logo)
     }
 
-    private fun logoutConfirmation(){
+    private fun logoutConfirmation() {
         AlertDialog.Builder(this).apply {
             setTitle(getString(R.string.confirmation))
             setMessage(getString(R.string.are_you_sure_want_to_logout))
@@ -130,19 +121,18 @@ class MainActivity : AppCompatActivity() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-
     private fun setupAction() {
         binding.apply {
-                binding.rvStory.adapter = adapter.withLoadStateFooter(
-                    footer = LoadingStateAdapter {
-                        adapter.retry()
-                    }
-                )
-                mainViewModel.listStory.observe(this@MainActivity) {
-                    adapter.submitData(lifecycle, it)
-                    showLoading(false)
-                    binding.swiperefresh.isRefreshing = false
+            binding.rvStory.adapter = adapter.withLoadStateFooter(
+                footer = LoadingStateAdapter {
+                    adapter.retry()
                 }
+            )
+            mainViewModel.listStory.observe(this@MainActivity) {
+                adapter.submitData(lifecycle, it)
+                showLoading(false)
+                binding.swiperefresh.isRefreshing = false
+            }
         }
     }
 }

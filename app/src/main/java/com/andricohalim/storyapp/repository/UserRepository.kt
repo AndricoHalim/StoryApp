@@ -8,9 +8,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
-import com.andricohalim.data.StoryPagingSource
 import com.andricohalim.storyapp.data.StoryRemoteMediator
-import com.andricohalim.storyapp.database.StoryDao
 import com.andricohalim.storyapp.database.StoryDatabase
 import com.andricohalim.storyapp.retrofit.UserModel
 import com.andricohalim.storyapp.response.ErrorResponse
@@ -37,7 +35,11 @@ class UserRepository (
     private val userPreference: UserPreference,
     private val userDatabase: StoryDatabase
 ) {
-    fun register(name: String, email: String, password: String): LiveData<Result<RegisterResponse>> =
+    fun register(
+        name: String,
+        email: String,
+        password: String
+    ): LiveData<Result<RegisterResponse>> =
         liveData {
             emit(Result.Loading)
             try {
@@ -81,7 +83,6 @@ class UserRepository (
                 ),
                 remoteMediator = StoryRemoteMediator(userDatabase, apiService),
                 pagingSourceFactory = {
-//                    StoryPagingSource(apiService)
                     userDatabase.storyDao().getAllStory()
                 }
             ).liveData
@@ -107,7 +108,7 @@ class UserRepository (
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
             emit(Result.Error(errorResponse.message))
-        }catch (e: Exception){
+        } catch (e: Exception) {
             emit(Result.Error(e.toString()))
         }
     }
@@ -115,29 +116,30 @@ class UserRepository (
     fun getStoryWithLocation(): LiveData<Result<StoryResponse>> =
         liveData {
             emit(Result.Loading)
-            try{
+            try {
                 val storyLocationResponse = apiService.getStoriesWithLocation()
                 emit(Result.Success(storyLocationResponse))
-            }catch (e: HttpException) {
+            } catch (e: HttpException) {
                 val error = e.response()?.errorBody()?.string()
                 val errorRes = Gson().fromJson(error, MapsResponse::class.java)
                 Log.d(TAG, "getStoryWithLocation ${e.message.toString()}")
                 emit(Result.Error(errorRes.message))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(Result.Error(e.toString()))
             }
         }
 
-    suspend fun logout(){
+    suspend fun logout() {
         userPreference.logout()
     }
-        suspend fun saveSession(user: UserModel) {
-            userPreference.saveSession(user)
-        }
 
-        fun getSession(): Flow<UserModel> {
-            return userPreference.getSession()
-        }
+    suspend fun saveSession(user: UserModel) {
+        userPreference.saveSession(user)
+    }
+
+    fun getSession(): Flow<UserModel> {
+        return userPreference.getSession()
+    }
 
     companion object {
         private const val TAG = "UserRepository"

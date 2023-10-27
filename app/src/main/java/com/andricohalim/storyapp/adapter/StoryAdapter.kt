@@ -2,10 +2,8 @@ package com.andricohalim.storyapp.adapter
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityOptionsCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -14,13 +12,7 @@ import com.andricohalim.storyapp.databinding.StoryRowBinding
 import com.andricohalim.storyapp.utils.loadImage
 import com.andricohalim.storyapp.response.ListStoryItem
 import com.andricohalim.storyapp.ui.detail.DetailActivity
-import com.andricohalim.storyapp.utils.DateFormatter
 import com.andricohalim.storyapp.utils.formatDate
-import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 import java.util.TimeZone
 
 class StoryAdapter :
@@ -54,10 +46,6 @@ class StoryAdapter :
             }
         }
     }
-//
-//    override fun getItemCount(): Int {
-//        return
-//    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = getItem(position)

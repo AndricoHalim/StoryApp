@@ -42,7 +42,7 @@ class UploadStoryActivity : AppCompatActivity() {
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions : Map<String, Boolean> ->
+    ) { permissions: Map<String, Boolean> ->
         val cameraPermissionGranted = permissions[Manifest.permission.CAMERA] ?: false
         val fineLocationPermissionGranted =
             permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
@@ -50,7 +50,7 @@ class UploadStoryActivity : AppCompatActivity() {
         when {
             cameraPermissionGranted -> Toast.makeText(
                 this,
-                "Camera permission granted ",
+                "Camera permission granted",
                 Toast.LENGTH_LONG
             ).show()
 
@@ -108,13 +108,12 @@ class UploadStoryActivity : AppCompatActivity() {
             locationSwitcher = isChecked
             if (isChecked) {
                 requestLocationUpdates()
-            } else{
+            } else {
                 binding.tvLocation.text = null
             }
 
         }
     }
-
 
     private fun requestLocationUpdates() {
         if (locationSwitcher) {
@@ -127,7 +126,6 @@ class UploadStoryActivity : AppCompatActivity() {
                                 val latitude = it.latitude
                                 val longitude = it.longitude
                                 Log.d("Location", "Latitude: $latitude, Longitude: $longitude")
-                                binding.tvLocation.text = ("$latitude , $longitude")
                             }
                         }
                         .addOnFailureListener { e ->
@@ -169,7 +167,6 @@ class UploadStoryActivity : AppCompatActivity() {
         Log.d("Camera", "Image URI: $currentImageUri")
         launcherIntentCamera.launch(currentImageUri)
     }
-
 
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.TakePicture()
@@ -218,7 +215,6 @@ class UploadStoryActivity : AppCompatActivity() {
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                 }
                             startActivity(intent)
-//                            finish()
                         }
 
                         is Result.Error -> {

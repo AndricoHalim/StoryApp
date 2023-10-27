@@ -41,10 +41,10 @@ class LoginActivityTest {
     fun loginAndLogout() {
         onView(withId(R.id.btnLogin)).perform(ViewActions.click())
         onView(withId(R.id.ed_login_email)).perform(ViewActions.click())
-        onView(withId(R.id.ed_login_email)).perform(ViewActions.typeText("jetstories@dicoding.com"))
+        onView(withId(R.id.ed_login_email)).perform(ViewActions.typeText("test@gmail.com"))
 
         onView(withId(R.id.ed_login_password)).perform(ViewActions.click())
-        onView(withId(R.id.ed_login_password)).perform(ViewActions.typeText("qwertyui"))
+        onView(withId(R.id.ed_login_password)).perform(ViewActions.typeText("12345678"))
 
 
         val mockResponse = MockResponse()

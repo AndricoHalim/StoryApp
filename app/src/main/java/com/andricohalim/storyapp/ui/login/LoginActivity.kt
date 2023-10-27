@@ -54,7 +54,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.tvRegisterDisini.setOnClickListener {
-            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            val intent =
+                Intent(this@LoginActivity, RegisterActivity::class.java).apply {
+                    flags =
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                }
             startActivity(intent)
         }
 
@@ -80,9 +84,12 @@ class LoginActivity : AppCompatActivity() {
                         setTitle(getString(R.string.sukses_login))
                         setMessage(getString(R.string.login_berhasil))
                         setPositiveButton(getString(R.string.lanjut)) { _, _ ->
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            val intent =
+                                Intent(this@LoginActivity, MainActivity::class.java).apply {
+                                    flags =
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                }
                             startActivity(intent)
-                            finish()
                         }
                         show()
                     }
@@ -127,7 +134,8 @@ class LoginActivity : AppCompatActivity() {
             ObjectAnimator.ofFloat(binding.edLoginPassword, View.ALPHA, 1f).setDuration(100)
         val btnLogin = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(100)
         val tvRegister = ObjectAnimator.ofFloat(binding.tvRegister, View.ALPHA, 1f).setDuration(100)
-        val tvRegisterDisini = ObjectAnimator.ofFloat(binding.tvRegisterDisini, View.ALPHA, 1f).setDuration(100)
+        val tvRegisterDisini =
+            ObjectAnimator.ofFloat(binding.tvRegisterDisini, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
             playSequentially(
@@ -144,5 +152,4 @@ class LoginActivity : AppCompatActivity() {
             startDelay = 100
         }.start()
     }
-
 }

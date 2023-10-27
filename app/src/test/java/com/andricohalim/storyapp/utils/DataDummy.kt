@@ -1,8 +1,5 @@
 package com.andricohalim.storyapp.utils
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.PagingData
 import com.andricohalim.storyapp.response.ListStoryItem
 
 object DataDummy {

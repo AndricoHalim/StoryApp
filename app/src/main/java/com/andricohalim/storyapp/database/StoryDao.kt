@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.andricohalim.storyapp.response.ListStoryItem
-import com.andricohalim.storyapp.response.StoryResponse
 
 @Dao
 interface StoryDao {

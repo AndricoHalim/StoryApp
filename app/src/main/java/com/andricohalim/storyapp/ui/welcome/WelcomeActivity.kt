@@ -43,7 +43,7 @@ class WelcomeActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnLocalization.setOnClickListener{
+        binding.btnLocalization.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }
 
@@ -60,13 +60,16 @@ class WelcomeActivity : AppCompatActivity() {
         val title = ObjectAnimator.ofFloat(binding.title, View.ALPHA, 1f).setDuration(100)
         val title2 = ObjectAnimator.ofFloat(binding.title2, View.ALPHA, 1f).setDuration(100)
         val btnLogin = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(100)
-        val btnRegister = ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(100)
+        val btnRegister =
+            ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
-            playSequentially(   title,
+            playSequentially(
+                title,
                 title2,
                 btnLogin,
-                btnRegister)
+                btnRegister
+            )
             start()
         }
     }

@@ -6,8 +6,6 @@ import com.andricohalim.storyapp.R
 import com.andricohalim.storyapp.databinding.ActivityDetailBinding
 import com.andricohalim.storyapp.utils.loadImage
 import com.andricohalim.storyapp.response.ListStoryItem
-import java.text.SimpleDateFormat
-import java.util.Locale
 import java.util.TimeZone
 
 class DetailActivity : AppCompatActivity() {

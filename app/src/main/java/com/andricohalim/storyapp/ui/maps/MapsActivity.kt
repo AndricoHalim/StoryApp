@@ -3,18 +3,13 @@ package com.andricohalim.storyapp.ui.maps
 import android.Manifest
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.andricohalim.storyapp.R
-
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -23,14 +18,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.andricohalim.storyapp.databinding.ActivityMapsBinding
 import com.andricohalim.storyapp.response.ListStoryItem
 import com.andricohalim.storyapp.response.Result
-import com.andricohalim.storyapp.response.StoryResponse
-import com.andricohalim.storyapp.ui.main.MainViewModel
 import com.andricohalim.storyapp.utils.ViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.MapStyleOptions
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -123,7 +116,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
         }
     }
 
-    companion object{
+    companion object {
         private const val TAG = "MapsActivity"
     }
 }
